@@ -1,217 +1,642 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>CRM-DealDesk</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
-  background:#f4f6fb;
-  color:#111827;
-}
-header{
-  background:#0f172a;
-  color:#fff;
-  padding:16px;
-  font-size:22px;
-  font-weight:600;
-}
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
-.card{
-  background:#fff;
-  border-radius:10px;
-  padding:20px;
-  box-shadow:0 8px 20px rgba(0,0,0,.08);
-  margin-bottom:20px;
-}
-h2{
-  margin-top:0;
-}
-label{
-  font-weight:600;
-  margin-top:10px;
-  display:block;
-}
-input,textarea,select,button{
-  width:100%;
-  padding:10px;
-  margin-top:6px;
-  border-radius:6px;
-  border:1px solid #d1d5db;
-  font-size:15px;
-}
-button{
-  margin-top:14px;
-  background:#2563eb;
-  color:#fff;
-  border:none;
-  cursor:pointer;
-}
-button:hover{
-  background:#1e40af;
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:10px;
-}
-th,td{
-  padding:10px;
-  border-bottom:1px solid #e5e7eb;
-  text-align:left;
-  font-size:14px;
-}
-th{
-  background:#f1f5f9;
-}
-.badge{
-  padding:4px 8px;
-  border-radius:6px;
-  font-size:12px;
-  font-weight:600;
-}
-.hot{background:#fee2e2;color:#991b1b;}
-.warm{background:#fef3c7;color:#92400e;}
-.cold{background:#e0f2fe;color:#075985;}
-footer{
-  text-align:center;
-  font-size:13px;
-  color:#6b7280;
-  padding:12px;
-}
+  :root{
+    --bg:#f4f6fb; --card:#fff; --ink:#0f172a; --muted:#64748b; --line:#e5e7eb;
+    --brand:#2563eb; --good:#16a34a; --warn:#ea580c; --bad:#dc2626;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;background:var(--bg);color:var(--ink)}
+  header{background:#0f172a;color:#fff;padding:16px 18px;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  header .small{font-weight:500;font-size:13px;opacity:.8}
+  .wrap{max-width:1200px;margin:0 auto;padding:18px}
+  .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+  @media (max-width: 980px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.06);padding:16px}
+  h2{margin:0 0 10px 0;font-size:18px}
+  label{display:block;font-weight:650;margin-top:10px;font-size:13px;color:var(--ink)}
+  input,textarea,select,button{
+    width:100%;padding:10px 10px;border-radius:10px;border:1px solid var(--line);
+    font-size:14px;background:#fff;color:var(--ink)
+  }
+  textarea{min-height:84px;resize:vertical}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media (max-width: 600px){.row{grid-template-columns:1fr}}
+  button{border:none;background:var(--brand);color:#fff;font-weight:700;cursor:pointer}
+  button:hover{filter:brightness(.95)}
+  .btn2{background:#111827}
+  .btn3{background:#0ea5e9}
+  .btnDanger{background:#b91c1c}
+  .muted{color:var(--muted);font-size:13px;line-height:1.4}
+  .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);padding:6px 10px;border-radius:999px;font-size:12px;color:var(--muted)}
+  .kpi{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px}
+  @media (max-width: 600px){.kpi{grid-template-columns:1fr}}
+  .kpi .box{border:1px solid var(--line);border-radius:12px;padding:10px}
+  .kpi .num{font-size:18px;font-weight:800}
+  .kpi .lbl{font-size:12px;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;margin-top:10px}
+  th,td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left;font-size:13px;vertical-align:top}
+  th{background:#f1f5f9;font-size:12px;color:#0f172a}
+  .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:750}
+  .hot{background:#fee2e2;color:#991b1b}
+  .warm{background:#fef3c7;color:#92400e}
+  .cold{background:#e0f2fe;color:#075985}
+  .ok{background:#dcfce7;color:#166534}
+  .warn{background:#ffedd5;color:#9a3412}
+  .bad{background:#fee2e2;color:#991b1b}
+  .flex{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .split{display:flex;gap:10px;flex-wrap:wrap}
+  .split > *{flex:1;min-width:170px}
+  .preview{border:1px dashed var(--line);border-radius:12px;padding:10px;background:#fafafa}
+  .preview img{max-width:100%;border-radius:10px}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;white-space:pre-wrap}
+  footer{padding:14px;text-align:center;color:var(--muted);font-size:12px}
 </style>
+
+<!-- OCR + PDF libraries (browser-only, GitHub Pages friendly) -->
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 </head>
 
 <body>
+<header>
+  <div>CRM-DealDesk <span class="small">• OCR • Deal Logic • PDF</span></div>
+  <div class="pill" id="statusPill">Ready</div>
+</header>
 
-<header>CRM-DealDesk</header>
+<div class="wrap">
+  <div class="grid">
+    <!-- LEFT: CRM + OCR -->
+    <div class="card">
+      <div class="flex" style="justify-content:space-between">
+        <h2>Deal Intake</h2>
+        <div class="flex">
+          <button class="btn2" onclick="saveDeal()">Save Deal</button>
+          <button class="btnDanger" onclick="clearAll()">Clear All</button>
+        </div>
+      </div>
 
-<div class="container">
+      <div class="row">
+        <div>
+          <label>Property Address</label>
+          <input id="address" placeholder="123 Main St, Columbus, OH" />
+        </div>
+        <div>
+          <label>Lead Temperature</label>
+          <select id="temp">
+            <option>Hot</option>
+            <option>Warm</option>
+            <option>Cold</option>
+          </select>
+        </div>
+      </div>
 
-<!-- ADD DEAL -->
-<div class="card">
-<h2>Add New Deal</h2>
+      <div class="row">
+        <div>
+          <label>Seller Name</label>
+          <input id="seller" placeholder="Matthew / Christopher / etc." />
+        </div>
+        <div>
+          <label>Seller Email</label>
+          <input id="email" placeholder="seller@email.com" />
+        </div>
+      </div>
 
-<label>Property Address</label>
-<input id="address" placeholder="123 Main St, Columbus OH">
+      <div class="row">
+        <div>
+          <label>Asking / Purchase Price ($)</label>
+          <input id="price" type="number" placeholder="95000" />
+        </div>
+        <div>
+          <label>Est. Monthly Rent ($)</label>
+          <input id="rent" type="number" placeholder="1300" />
+        </div>
+      </div>
 
-<label>Seller Name</label>
-<input id="seller">
+      <div class="row">
+        <div>
+          <label>Repairs ($)</label>
+          <input id="repairs" type="number" placeholder="0" />
+        </div>
+        <div>
+          <label>ARV ($) (optional)</label>
+          <input id="arv" type="number" placeholder="150000" />
+        </div>
+      </div>
 
-<label>Seller Email</label>
-<input id="email">
+      <div class="row">
+        <div>
+          <label>Mortgage Balance (SubTo) ($)</label>
+          <input id="loanBal" type="number" placeholder="120000" />
+        </div>
+        <div>
+          <label>Interest Rate (SubTo) (%)</label>
+          <input id="rate" type="number" step="0.01" placeholder="5.75" />
+        </div>
+      </div>
 
-<label>Purchase Price ($)</label>
-<input id="price" type="number">
+      <div class="row">
+        <div>
+          <label>PITI (SubTo) ($/mo) (optional)</label>
+          <input id="piti" type="number" placeholder="980" />
+        </div>
+        <div>
+          <label>Other Monthly Expenses ($/mo)</label>
+          <input id="otherMo" type="number" placeholder="150 (vacancy/maint/PM/etc)" />
+        </div>
+      </div>
 
-<label>Estimated Monthly Rent ($)</label>
-<input id="rent" type="number">
+      <label>Notes</label>
+      <textarea id="notes" placeholder="Motivation, timeline, liens, agent info, etc."></textarea>
 
-<label>Strategy</label>
-<select id="strategy">
-  <option>Cash</option>
-  <option>Seller Finance</option>
-  <option>Subject-To</option>
-  <option>Land Contract</option>
-</select>
+      <div class="card" style="margin-top:14px;border-radius:12px">
+        <h2 style="margin-bottom:6px">📸 Upload Listing Photo → OCR</h2>
+        <div class="muted">Upload a screenshot/photo (listing, chat, flyer). OCR will try to pull price/rent/ARV keywords.</div>
 
-<label>Lead Temperature</label>
-<select id="temp">
-  <option>Hot</option>
-  <option>Warm</option>
-  <option>Cold</option>
-</select>
+        <div class="split" style="margin-top:10px">
+          <div>
+            <input id="imgInput" type="file" accept="image/*" />
+            <button class="btn3" onclick="runOCR()">Run OCR</button>
+          </div>
+          <div class="preview" id="imgPreview">
+            <div class="muted">Preview shows here.</div>
+          </div>
+        </div>
 
-<label>Notes</label>
-<textarea id="notes" rows="3"></textarea>
+        <label>OCR Text (editable)</label>
+        <textarea id="ocrText" class="mono" placeholder="OCR output will appear here..."></textarea>
 
-<button onclick="addDeal()">Save Deal</button>
+        <div class="flex">
+          <button onclick="extractFromOCR()">Auto-Fill From OCR</button>
+          <button class="btn2" onclick="analyzeDeal()">Analyze / Recommend Structure</button>
+          <button class="btn3" onclick="exportPDF()">Export PDF for Buyer</button>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <div class="box">
+          <div class="lbl">Gross Rent Yield</div>
+          <div class="num" id="kpiYield">—</div>
+        </div>
+        <div class="box">
+          <div class="lbl">Estimated Monthly Cashflow</div>
+          <div class="num" id="kpiCF">—</div>
+        </div>
+        <div class="box">
+          <div class="lbl">Suggested Strategy</div>
+          <div class="num" id="kpiStrat">—</div>
+        </div>
+      </div>
+
+      <div style="margin-top:10px" id="recBox" class="preview">
+        <div class="muted">Recommendation appears here after Analyze.</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Pipeline -->
+    <div class="card">
+      <div class="flex" style="justify-content:space-between">
+        <h2>Pipeline</h2>
+        <button class="btn2" onclick="exportJSON()">Export JSON</button>
+      </div>
+      <div class="muted">Saved deals live in your browser (localStorage). Cloud login comes next.</div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Address</th>
+            <th>Price</th>
+            <th>Rent</th>
+            <th>Score</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="dealTable"></tbody>
+      </table>
+
+      <div class="flex" style="margin-top:10px">
+        <button onclick="loadSelected()">Load Selected</button>
+        <button class="btnDanger" onclick="deleteSelected()">Delete Selected</button>
+      </div>
+
+      <label style="margin-top:10px">Select Deal</label>
+      <select id="dealSelect"></select>
+
+      <div class="preview" style="margin-top:10px">
+        <div class="muted">Tip: If you want cloud + login, easiest free setup is <b>Supabase</b>. I can wire it in once your Pages deploy is fixed.</div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- DEAL LIST -->
-<div class="card">
-<h2>Deal Pipeline</h2>
-
-<table>
-<thead>
-<tr>
-<th>Address</th>
-<th>Price</th>
-<th>Rent</th>
-<th>ROI</th>
-<th>Strategy</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody id="dealTable"></tbody>
-</table>
-
-</div>
-
-</div>
-
-<footer>CRM-DealDesk • Local Storage CRM</footer>
+<footer>CRM-DealDesk • Static (GitHub Pages) • OCR + PDF runs in-browser</footer>
 
 <script>
-let deals = JSON.parse(localStorage.getItem("deals")) || [];
+  // ---------- Helpers ----------
+  const $ = (id)=>document.getElementById(id);
+  const setStatus = (txt)=>{$('statusPill').textContent = txt;};
+  const money = (n)=> (isFinite(n) ? "$" + Number(n).toLocaleString() : "—");
 
-function addDeal(){
-  const deal = {
-    address: address.value,
-    seller: seller.value,
-    email: email.value,
-    price: Number(price.value),
-    rent: Number(rent.value),
-    strategy: strategy.value,
-    temp: temp.value,
-    notes: notes.value
-  };
+  // ---------- Storage ----------
+  let deals = JSON.parse(localStorage.getItem("deals_v1") || "[]");
 
-  if(!deal.address || !deal.price || !deal.rent){
-    alert("Address, price, and rent required.");
-    return;
+  function persist(){
+    localStorage.setItem("deals_v1", JSON.stringify(deals));
+    renderPipeline();
   }
 
-  deals.push(deal);
-  localStorage.setItem("deals", JSON.stringify(deals));
-  clearForm();
-  renderDeals();
-}
+  function clearAll(){
+    if(!confirm("Clear all deals + form?")) return;
+    deals = [];
+    persist();
+    resetForm();
+    setStatus("Cleared");
+  }
 
-function renderDeals(){
-  dealTable.innerHTML = "";
-  deals.forEach(d=>{
-    const roi = ((d.rent*12)/d.price*100).toFixed(1);
-    const badge =
-      d.temp==="Hot" ? "hot" :
-      d.temp==="Warm" ? "warm" : "cold";
+  function resetForm(){
+    ["address","seller","email","price","rent","repairs","arv","loanBal","rate","piti","otherMo","notes","ocrText"].forEach(id=>$(id).value="");
+    $('imgPreview').innerHTML = '<div class="muted">Preview shows here.</div>';
+    $('recBox').innerHTML = '<div class="muted">Recommendation appears here after Analyze.</div>';
+    $('kpiYield').textContent = "—";
+    $('kpiCF').textContent = "—";
+    $('kpiStrat').textContent = "—";
+  }
 
-    dealTable.innerHTML += `
-      <tr>
-        <td>${d.address}</td>
-        <td>$${d.price.toLocaleString()}</td>
-        <td>$${d.rent}</td>
-        <td>${roi}%</td>
-        <td>${d.strategy}</td>
-        <td><span class="badge ${badge}">${d.temp}</span></td>
-      </tr>
-    `;
+  // ---------- Save / Load ----------
+  function currentDeal(){
+    return {
+      id: crypto.randomUUID(),
+      created: new Date().toISOString(),
+      address: $('address').value.trim(),
+      temp: $('temp').value,
+      seller: $('seller').value.trim(),
+      email: $('email').value.trim(),
+      price: Number($('price').value || 0),
+      rent: Number($('rent').value || 0),
+      repairs: Number($('repairs').value || 0),
+      arv: Number($('arv').value || 0),
+      loanBal: Number($('loanBal').value || 0),
+      rate: Number($('rate').value || 0),
+      piti: Number($('piti').value || 0),
+      otherMo: Number($('otherMo').value || 0),
+      notes: $('notes').value.trim(),
+      ocrText: $('ocrText').value || ""
+    };
+  }
+
+  function saveDeal(){
+    const d = currentDeal();
+    if(!d.address || !d.price){
+      alert("Need at least Address + Price to save.");
+      return;
+    }
+    const analysis = analyzeNumbers(d);
+    d.score = analysis.score;
+    d.suggested = analysis.suggested;
+    d.cashflow = analysis.cashflow;
+    d.yield = analysis.yieldPct;
+
+    deals.unshift(d);
+    persist();
+    setStatus("Saved");
+  }
+
+  function renderPipeline(){
+    const tbody = $('dealTable');
+    tbody.innerHTML = "";
+    const sel = $('dealSelect');
+    sel.innerHTML = "";
+
+    deals.forEach((d, idx)=>{
+      const opt = document.createElement("option");
+      opt.value = d.id;
+      opt.textContent = `${idx+1}. ${d.address}`;
+      sel.appendChild(opt);
+
+      const score = (d.score ?? 0);
+      const scoreClass = score >= 75 ? "ok" : score >= 55 ? "warn" : "bad";
+      const tempClass = d.temp==="Hot" ? "hot" : d.temp==="Warm" ? "warm" : "cold";
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>
+          <div style="font-weight:700">${escapeHtml(d.address)}</div>
+          <div class="muted">${escapeHtml(d.suggested || "—")}</div>
+        </td>
+        <td>${money(d.price)}</td>
+        <td>${money(d.rent)}</td>
+        <td><span class="badge ${scoreClass}">${score}</span></td>
+        <td><span class="badge ${tempClass}">${escapeHtml(d.temp)}</span></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    if(deals.length===0){
+      tbody.innerHTML = `<tr><td colspan="5" class="muted">No deals saved yet.</td></tr>`;
+      const opt = document.createElement("option");
+      opt.textContent = "—";
+      opt.value = "";
+      sel.appendChild(opt);
+    }
+  }
+
+  function loadSelected(){
+    const id = $('dealSelect').value;
+    const d = deals.find(x=>x.id===id);
+    if(!d){ alert("Select a deal first."); return; }
+
+    $('address').value = d.address || "";
+    $('temp').value = d.temp || "Warm";
+    $('seller').value = d.seller || "";
+    $('email').value = d.email || "";
+    $('price').value = d.price || "";
+    $('rent').value = d.rent || "";
+    $('repairs').value = d.repairs || "";
+    $('arv').value = d.arv || "";
+    $('loanBal').value = d.loanBal || "";
+    $('rate').value = d.rate || "";
+    $('piti').value = d.piti || "";
+    $('otherMo').value = d.otherMo || "";
+    $('notes').value = d.notes || "";
+    $('ocrText').value = d.ocrText || "";
+
+    analyzeDeal();
+    setStatus("Loaded");
+  }
+
+  function deleteSelected(){
+    const id = $('dealSelect').value;
+    if(!id) return;
+    if(!confirm("Delete selected deal?")) return;
+    deals = deals.filter(d=>d.id!==id);
+    persist();
+    setStatus("Deleted");
+  }
+
+  function exportJSON(){
+    const blob = new Blob([JSON.stringify(deals, null, 2)], {type:"application/json"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "crm-deals.json";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  // ---------- OCR ----------
+  $('imgInput').addEventListener('change', (e)=>{
+    const file = e.target.files?.[0];
+    if(!file) return;
+    const url = URL.createObjectURL(file);
+    $('imgPreview').innerHTML = `<img alt="preview" src="${url}">`;
   });
-}
 
-function clearForm(){
-  document.querySelectorAll("input,textarea").forEach(e=>e.value="");
-}
+  async function runOCR(){
+    const file = $('imgInput').files?.[0];
+    if(!file){
+      alert("Upload an image first.");
+      return;
+    }
+    setStatus("OCR running...");
+    $('ocrText').value = "";
 
-renderDeals();
+    try{
+      const { data } = await Tesseract.recognize(file, 'eng', {
+        logger: m => { if(m.status) setStatus(`OCR: ${m.status} ${Math.round((m.progress||0)*100)}%`); }
+      });
+      $('ocrText').value = (data.text || "").trim();
+      setStatus("OCR complete");
+    }catch(err){
+      console.error(err);
+      setStatus("OCR failed");
+      alert("OCR failed. Try a clearer screenshot (zoom in on the numbers).");
+    }
+  }
+
+  function extractFromOCR(){
+    const txt = ($('ocrText').value || "").replace(/,/g,"");
+    if(!txt.trim()){
+      alert("No OCR text yet.");
+      return;
+    }
+
+    // Pull likely dollar amounts (very heuristic)
+    const dollars = [...txt.matchAll(/\$?\s?(\d{2,7})(?:\.\d{2})?/g)].map(m=>Number(m[1])).filter(n=>n>=100);
+    // Attempt keyword-based picks
+    const priceGuess = findNearKeyword(txt, ["price","asking","list","sale","purchase","$"], 4000) || maxInRange(dollars, 30000, 1500000);
+    const rentGuess  = findNearKeyword(txt, ["rent","monthly","lease"], 2000) || maxInRange(dollars, 400, 8000);
+    const arvGuess   = findNearKeyword(txt, ["arv","after repair value","value"], 4000) || 0;
+
+    if(priceGuess && !$('price').value) $('price').value = priceGuess;
+    if(rentGuess && !$('rent').value) $('rent').value = rentGuess;
+    if(arvGuess && !$('arv').value) $('arv').value = arvGuess;
+
+    setStatus("Auto-filled from OCR");
+    analyzeDeal();
+  }
+
+  function findNearKeyword(text, keywords, maxVal){
+    const lower = text.toLowerCase();
+    for(const k of keywords){
+      const idx = lower.indexOf(k);
+      if(idx !== -1){
+        const slice = text.slice(idx, idx+180);
+        const m = slice.replace(/,/g,"").match(/(\d{2,7})/);
+        if(m){
+          const n = Number(m[1]);
+          if(n>0 && n<=maxVal) return n;
+        }
+      }
+    }
+    return 0;
+  }
+  function maxInRange(arr, lo, hi){
+    const filtered = arr.filter(n=>n>=lo && n<=hi);
+    return filtered.length ? Math.max(...filtered) : 0;
+  }
+
+  // ---------- Deal logic (AI-ish without API key) ----------
+  function analyzeNumbers(d){
+    const price = Number(d.price||0);
+    const rent = Number(d.rent||0);
+    const repairs = Number(d.repairs||0);
+    const arv = Number(d.arv||0);
+    const otherMo = Number(d.otherMo||0);
+    const piti = Number(d.piti||0);
+    const loanBal = Number(d.loanBal||0);
+    const rate = Number(d.rate||0);
+
+    const yieldPct = (price>0) ? ((rent*12)/price*100) : 0;
+
+    // cashflow: if PITI given, use it; else approximate as 0 (you can fill later)
+    const baseMo = rent - (piti || 0) - otherMo;
+    const cashflow = isFinite(baseMo) ? Math.round(baseMo) : 0;
+
+    // Flip spread if ARV provided
+    const flipSpread = (arv>0) ? (arv - price - repairs) : 0;
+
+    // Score weights
+    let score = 0;
+    // Yield
+    if(yieldPct >= 12) score += 40;
+    else if(yieldPct >= 10) score += 32;
+    else if(yieldPct >= 8) score += 22;
+    else if(yieldPct >= 6) score += 12;
+    else score += 5;
+
+    // Cashflow
+    if(cashflow >= 300) score += 30;
+    else if(cashflow >= 150) score += 22;
+    else if(cashflow >= 0) score += 14;
+    else score += 4;
+
+    // Flip spread
+    if(flipSpread >= 40000) score += 20;
+    else if(flipSpread >= 25000) score += 14;
+    else if(flipSpread >= 15000) score += 8;
+    else if(flipSpread > 0) score += 4;
+
+    // Strategy recommendation
+    let suggested = "Cash (or Hard Money)";
+    const reasons = [];
+
+    if(piti && rent){
+      const dcr = rent / (piti + otherMo + 1);
+      if(dcr >= 1.25 && (loanBal>0 || rate>0)){
+        suggested = "Subject-To (SubTo) / Take over payments";
+        reasons.push(`Rent covers payment comfortably (coverage ~${dcr.toFixed(2)}x).`);
+      }
+    }
+
+    if(yieldPct < 7 && flipSpread > 25000){
+      suggested = "Flip / Wholetail (value play)";
+      reasons.push("Low rent yield but strong equity spread vs ARV.");
+    }
+
+    if(yieldPct >= 10 && cashflow >= 150){
+      suggested = "Buy & Hold (Rental)";
+      reasons.push("Strong rent yield + positive cashflow.");
+    }
+
+    // Seller finance tends to be best when: yield mediocre but terms can fix it
+    if(yieldPct >= 7 && yieldPct < 10){
+      suggested = "Seller Finance (make terms create the deal)";
+      reasons.push("Yield is close; better terms can push it into ‘buy box’.");
+    }
+
+    // Cap score 0-100
+    score = Math.max(0, Math.min(100, Math.round(score)));
+
+    return { score, suggested, yieldPct: Number(yieldPct.toFixed(2)), cashflow, flipSpread, reasons };
+  }
+
+  function analyzeDeal(){
+    const d = currentDeal();
+    if(!d.price || !d.rent){
+      $('recBox').innerHTML = `<div class="muted">Enter at least Price + Rent (or OCR them), then Analyze.</div>`;
+      return;
+    }
+
+    const a = analyzeNumbers(d);
+
+    $('kpiYield').textContent = a.yieldPct ? (a.yieldPct.toFixed(2) + "%") : "—";
+    $('kpiCF').textContent = isFinite(a.cashflow) ? (money(a.cashflow).replace(",","") + " /mo") : "—";
+    $('kpiStrat').textContent = a.suggested || "—";
+
+    const scoreClass = a.score >= 75 ? "ok" : a.score >= 55 ? "warn" : "bad";
+
+    const bullets = [
+      `Gross rent yield: <b>${a.yieldPct.toFixed(2)}%</b>`,
+      `Estimated monthly cashflow: <b>${money(a.cashflow)}</b> (needs PITI/expenses to be accurate)`,
+      a.flipSpread ? `ARV spread: <b>${money(a.flipSpread)}</b>` : `ARV spread: <span class="muted">ARV not provided</span>`
+    ];
+
+    const reasons = (a.reasons.length ? a.reasons : ["Based on your inputs, this structure best fits the numbers."])
+      .map(r=>`<li>${escapeHtml(r)}</li>`).join("");
+
+    $('recBox').innerHTML = `
+      <div class="flex" style="justify-content:space-between;align-items:flex-start">
+        <div>
+          <div class="muted">Deal Score</div>
+          <div style="font-size:26px;font-weight:900;line-height:1"><span class="badge ${scoreClass}" style="font-size:16px;padding:6px 12px">${a.score}/100</span></div>
+        </div>
+        <div style="text-align:right">
+          <div class="muted">Recommended</div>
+          <div style="font-size:16px;font-weight:900">${escapeHtml(a.suggested)}</div>
+        </div>
+      </div>
+      <ul style="margin:10px 0 0 18px">${bullets.map(b=>`<li>${b}</li>`).join("")}</ul>
+      <div class="muted" style="margin-top:8px;font-weight:700">Why this makes sense</div>
+      <ul style="margin:6px 0 0 18px">${reasons}</ul>
+    `;
+
+    setStatus("Analyzed");
+  }
+
+  // ---------- PDF Export ----------
+  function exportPDF(){
+    const d = currentDeal();
+    const a = analyzeNumbers(d);
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const lines = [
+      "CRM-DealDesk — Buyer Summary",
+      "",
+      `Address: ${d.address || "—"}`,
+      `Seller: ${d.seller || "—"}   Email: ${d.email || "—"}`,
+      "",
+      `Price: ${money(d.price)}   Rent: ${money(d.rent)}/mo   Repairs: ${money(d.repairs)}`,
+      `ARV: ${d.arv ? money(d.arv) : "—"}`,
+      "",
+      `SubTo: LoanBal ${d.loanBal ? money(d.loanBal) : "—"}   Rate ${d.rate ? (d.rate+"%") : "—"}   PITI ${d.piti ? money(d.piti)+"/mo" : "—"}`,
+      `Other Monthly Expenses: ${d.otherMo ? money(d.otherMo)+"/mo" : "—"}`,
+      "",
+      `Deal Score: ${a.score}/100`,
+      `Suggested Strategy: ${a.suggested}`,
+      `Gross Rent Yield: ${a.yieldPct.toFixed(2)}%`,
+      `Est. Monthly Cashflow: ${money(a.cashflow)}`,
+      "",
+      "Notes:",
+      d.notes || "—"
+    ];
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(12);
+
+    let y=14;
+    lines.forEach(t=>{
+      const split = doc.splitTextToSize(String(t), 180);
+      split.forEach(s=>{
+        doc.text(s, 14, y);
+        y+=7;
+        if(y>280){ doc.addPage(); y=14; }
+      });
+    });
+
+    const fname = (d.address ? d.address.replace(/[^\w\s-]/g,"").slice(0,40).trim().replace(/\s+/g,"_") : "deal")
+      + "_buyer_summary.pdf";
+    doc.save(fname);
+    setStatus("PDF exported");
+  }
+
+  // ---------- Safe HTML ----------
+  function escapeHtml(str){
+    return String(str ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  // Init
+  renderPipeline();
 </script>
-
 </body>
 </html>
