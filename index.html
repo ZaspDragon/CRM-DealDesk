@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CRM-DealDesk</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+  background:#f4f6fb;
+  color:#111827;
+}
+header{
+  background:#0f172a;
+  color:#fff;
+  padding:16px;
+  font-size:22px;
+  font-weight:600;
+}
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+.card{
+  background:#fff;
+  border-radius:10px;
+  padding:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  margin-bottom:20px;
+}
+h2{
+  margin-top:0;
+}
+label{
+  font-weight:600;
+  margin-top:10px;
+  display:block;
+}
+input,textarea,select,button{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border-radius:6px;
+  border:1px solid #d1d5db;
+  font-size:15px;
+}
+button{
+  margin-top:14px;
+  background:#2563eb;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+button:hover{
+  background:#1e40af;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+th,td{
+  padding:10px;
+  border-bottom:1px solid #e5e7eb;
+  text-align:left;
+  font-size:14px;
+}
+th{
+  background:#f1f5f9;
+}
+.badge{
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:600;
+}
+.hot{background:#fee2e2;color:#991b1b;}
+.warm{background:#fef3c7;color:#92400e;}
+.cold{background:#e0f2fe;color:#075985;}
+footer{
+  text-align:center;
+  font-size:13px;
+  color:#6b7280;
+  padding:12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>CRM-DealDesk</header>
+
+<div class="container">
+
+<!-- ADD DEAL -->
+<div class="card">
+<h2>Add New Deal</h2>
+
+<label>Property Address</label>
+<input id="address" placeholder="123 Main St, Columbus OH">
+
+<label>Seller Name</label>
+<input id="seller">
+
+<label>Seller Email</label>
+<input id="email">
+
+<label>Purchase Price ($)</label>
+<input id="price" type="number">
+
+<label>Estimated Monthly Rent ($)</label>
+<input id="rent" type="number">
+
+<label>Strategy</label>
+<select id="strategy">
+  <option>Cash</option>
+  <option>Seller Finance</option>
+  <option>Subject-To</option>
+  <option>Land Contract</option>
+</select>
+
+<label>Lead Temperature</label>
+<select id="temp">
+  <option>Hot</option>
+  <option>Warm</option>
+  <option>Cold</option>
+</select>
+
+<label>Notes</label>
+<textarea id="notes" rows="3"></textarea>
+
+<button onclick="addDeal()">Save Deal</button>
+</div>
+
+<!-- DEAL LIST -->
+<div class="card">
+<h2>Deal Pipeline</h2>
+
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>Price</th>
+<th>Rent</th>
+<th>ROI</th>
+<th>Strategy</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody id="dealTable"></tbody>
+</table>
+
+</div>
+
+</div>
+
+<footer>CRM-DealDesk • Local Storage CRM</footer>
+
+<script>
+let deals = JSON.parse(localStorage.getItem("deals")) || [];
+
+function addDeal(){
+  const deal = {
+    address: address.value,
+    seller: seller.value,
+    email: email.value,
+    price: Number(price.value),
+    rent: Number(rent.value),
+    strategy: strategy.value,
+    temp: temp.value,
+    notes: notes.value
+  };
+
+  if(!deal.address || !deal.price || !deal.rent){
+    alert("Address, price, and rent required.");
+    return;
+  }
+
+  deals.push(deal);
+  localStorage.setItem("deals", JSON.stringify(deals));
+  clearForm();
+  renderDeals();
+}
+
+function renderDeals(){
+  dealTable.innerHTML = "";
+  deals.forEach(d=>{
+    const roi = ((d.rent*12)/d.price*100).toFixed(1);
+    const badge =
+      d.temp==="Hot" ? "hot" :
+      d.temp==="Warm" ? "warm" : "cold";
+
+    dealTable.innerHTML += `
+      <tr>
+        <td>${d.address}</td>
+        <td>$${d.price.toLocaleString()}</td>
+        <td>$${d.rent}</td>
+        <td>${roi}%</td>
+        <td>${d.strategy}</td>
+        <td><span class="badge ${badge}">${d.temp}</span></td>
+      </tr>
+    `;
+  });
+}
+
+function clearForm(){
+  document.querySelectorAll("input,textarea").forEach(e=>e.value="");
+}
+
+renderDeals();
+</script>
+
+</body>
+</html>
