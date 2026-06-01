@@ -7,635 +7,1973 @@
 
 <style>
   :root{
-    --bg:#f4f6fb; --card:#fff; --ink:#0f172a; --muted:#64748b; --line:#e5e7eb;
-    --brand:#2563eb; --good:#16a34a; --warn:#ea580c; --bad:#dc2626;
+    --bg:#f3f6fb;
+    --card:#ffffff;
+    --ink:#0f172a;
+    --muted:#64748b;
+    --line:#dbe4f0;
+    --brand:#2563eb;
+    --brand-strong:#1d4ed8;
+    --accent:#0f766e;
+    --good:#15803d;
+    --warn:#c2410c;
+    --bad:#b91c1c;
+    --soft-good:#dcfce7;
+    --soft-warn:#ffedd5;
+    --soft-bad:#fee2e2;
+    --panel:#f8fafc;
+    --shadow:0 18px 40px rgba(15, 23, 42, 0.08);
   }
+
   *{box-sizing:border-box}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;background:var(--bg);color:var(--ink)}
-  header{background:#0f172a;color:#fff;padding:16px 18px;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:12px}
-  header .small{font-weight:500;font-size:13px;opacity:.8}
-  .wrap{max-width:1200px;margin:0 auto;padding:18px}
-  .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
-  @media (max-width: 980px){.grid{grid-template-columns:1fr}}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.06);padding:16px}
-  h2{margin:0 0 10px 0;font-size:18px}
-  label{display:block;font-weight:650;margin-top:10px;font-size:13px;color:var(--ink)}
-  input,textarea,select,button{
-    width:100%;padding:10px 10px;border-radius:10px;border:1px solid var(--line);
-    font-size:14px;background:#fff;color:var(--ink)
+
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:linear-gradient(180deg,#eef4ff 0%, var(--bg) 220px);
+    color:var(--ink);
   }
-  textarea{min-height:84px;resize:vertical}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  @media (max-width: 600px){.row{grid-template-columns:1fr}}
-  button{border:none;background:var(--brand);color:#fff;font-weight:700;cursor:pointer}
-  button:hover{filter:brightness(.95)}
-  .btn2{background:#111827}
-  .btn3{background:#0ea5e9}
-  .btnDanger{background:#b91c1c}
-  .muted{color:var(--muted);font-size:13px;line-height:1.4}
-  .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);padding:6px 10px;border-radius:999px;font-size:12px;color:var(--muted)}
-  .kpi{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px}
-  @media (max-width: 600px){.kpi{grid-template-columns:1fr}}
-  .kpi .box{border:1px solid var(--line);border-radius:12px;padding:10px}
-  .kpi .num{font-size:18px;font-weight:800}
-  .kpi .lbl{font-size:12px;color:var(--muted)}
-  table{width:100%;border-collapse:collapse;margin-top:10px}
-  th,td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left;font-size:13px;vertical-align:top}
-  th{background:#f1f5f9;font-size:12px;color:#0f172a}
-  .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:750}
-  .hot{background:#fee2e2;color:#991b1b}
-  .warm{background:#fef3c7;color:#92400e}
-  .cold{background:#e0f2fe;color:#075985}
-  .ok{background:#dcfce7;color:#166534}
-  .warn{background:#ffedd5;color:#9a3412}
-  .bad{background:#fee2e2;color:#991b1b}
-  .flex{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-  .split{display:flex;gap:10px;flex-wrap:wrap}
-  .split > *{flex:1;min-width:170px}
-  .preview{border:1px dashed var(--line);border-radius:12px;padding:10px;background:#fafafa}
-  .preview img{max-width:100%;border-radius:10px}
-  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;white-space:pre-wrap}
-  footer{padding:14px;text-align:center;color:var(--muted);font-size:12px}
+
+  header{
+    background:#0f172a;
+    color:#fff;
+    padding:16px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    box-shadow:0 12px 30px rgba(2, 6, 23, 0.28);
+  }
+
+  header .brand{
+    font-size:20px;
+    font-weight:800;
+    letter-spacing:.01em;
+  }
+
+  header .small{
+    font-size:13px;
+    font-weight:500;
+    opacity:.8;
+  }
+
+  .wrap{
+    max-width:1320px;
+    margin:0 auto;
+    padding:18px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:minmax(0, 1.45fr) minmax(300px, .95fr);
+    gap:16px;
+    align-items:start;
+  }
+
+  @media (max-width: 1080px){
+    .grid{
+      grid-template-columns:1fr;
+    }
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:18px;
+  }
+
+  .cardHeader{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+
+  h1,h2,h3{
+    margin:0;
+  }
+
+  h2{
+    font-size:20px;
+  }
+
+  h3{
+    font-size:15px;
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 10px;
+    border-radius:999px;
+    background:#eff6ff;
+    color:var(--brand-strong);
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:8px;
+  }
+
+  .muted{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.45;
+  }
+
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.08);
+    color:#fff;
+    padding:7px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+  }
+
+  .section{
+    margin-top:16px;
+    padding:16px;
+    border:1px solid var(--line);
+    border-radius:16px;
+    background:var(--panel);
+  }
+
+  .sectionHeader{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:12px;
+    flex-wrap:wrap;
+  }
+
+  .row{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:12px;
+  }
+
+  .row3{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:12px;
+  }
+
+  .row4{
+    display:grid;
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+    gap:12px;
+  }
+
+  @media (max-width: 840px){
+    .row3,
+    .row4{
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 620px){
+    .row,
+    .row3,
+    .row4{
+      grid-template-columns:1fr;
+    }
+  }
+
+  label{
+    display:block;
+    margin:0 0 6px;
+    font-size:13px;
+    font-weight:700;
+    color:var(--ink);
+  }
+
+  input,
+  textarea,
+  select,
+  button{
+    width:100%;
+    border-radius:12px;
+    border:1px solid var(--line);
+    padding:11px 12px;
+    font-size:14px;
+    background:#fff;
+    color:var(--ink);
+  }
+
+  input,
+  textarea,
+  select{
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus{
+    outline:none;
+    border-color:#93c5fd;
+    box-shadow:0 0 0 4px rgba(59, 130, 246, 0.15);
+  }
+
+  textarea{
+    min-height:108px;
+    resize:vertical;
+  }
+
+  button{
+    border:none;
+    background:var(--brand);
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+    transition:transform .12s ease, filter .12s ease, opacity .12s ease;
+  }
+
+  button:hover{
+    filter:brightness(.97);
+  }
+
+  button:active{
+    transform:translateY(1px);
+  }
+
+  button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+  }
+
+  .btnSecondary{background:#111827}
+  .btnAccent{background:var(--accent)}
+  .btnDanger{background:var(--bad)}
+  .btnGhost{
+    background:#fff;
+    color:var(--ink);
+    border:1px solid var(--line);
+  }
+
+  .actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .actions > *{
+    flex:1;
+    min-width:150px;
+  }
+
+  .compactActions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .compactActions > *{
+    flex:0 0 auto;
+    min-width:160px;
+  }
+
+  @media (max-width: 620px){
+    .compactActions > *{
+      flex:1 1 100%;
+    }
+  }
+
+  .preview,
+  .importSummary,
+  .errorBox,
+  .tipBox{
+    border-radius:16px;
+    padding:14px;
+  }
+
+  .preview{
+    background:#fff;
+    border:1px dashed #bfd0e4;
+  }
+
+  .preview img{
+    display:block;
+    width:100%;
+    max-height:360px;
+    object-fit:contain;
+    border-radius:12px;
+    background:#f8fafc;
+  }
+
+  .errorBox{
+    background:var(--soft-bad);
+    color:#7f1d1d;
+    border:1px solid #fecaca;
+  }
+
+  .tipBox{
+    background:#eff6ff;
+    color:#1e3a8a;
+    border:1px solid #bfdbfe;
+  }
+
+  .importSummary{
+    margin-top:14px;
+    background:#f8fafc;
+    border:1px solid var(--line);
+    display:none;
+  }
+
+  .importSummary.show{
+    display:block;
+  }
+
+  .summaryCounts{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:10px;
+  }
+
+  .summaryCounts .badge{
+    font-size:12px;
+  }
+
+  .kpi{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:12px;
+    margin-top:14px;
+  }
+
+  @media (max-width: 700px){
+    .kpi{
+      grid-template-columns:1fr;
+    }
+  }
+
+  .kpi .box{
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:14px;
+    background:#fff;
+  }
+
+  .kpi .lbl{
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .kpi .num{
+    margin-top:8px;
+    font-size:20px;
+    font-weight:800;
+  }
+
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:5px 10px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:800;
+  }
+
+  .temp-hot{background:#fee2e2;color:#991b1b}
+  .temp-warm{background:#fef3c7;color:#92400e}
+  .temp-cold{background:#dbeafe;color:#1d4ed8}
+  .score-good{background:var(--soft-good);color:#166534}
+  .score-warn{background:var(--soft-warn);color:#9a3412}
+  .score-bad{background:var(--soft-bad);color:#991b1b}
+
+  .confidence-high{background:var(--soft-good);color:#166534}
+  .confidence-review{background:var(--soft-warn);color:#9a3412}
+  .confidence-missing{background:var(--soft-bad);color:#991b1b}
+
+  .tableWrap{
+    overflow:auto;
+    border:1px solid var(--line);
+    border-radius:16px;
+    background:#fff;
+  }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:620px;
+  }
+
+  th,
+  td{
+    padding:12px 10px;
+    border-bottom:1px solid var(--line);
+    text-align:left;
+    vertical-align:top;
+    font-size:13px;
+  }
+
+  th{
+    background:#f8fafc;
+    font-size:12px;
+    color:#334155;
+    letter-spacing:.02em;
+    text-transform:uppercase;
+  }
+
+  td strong{
+    display:block;
+    margin-bottom:4px;
+  }
+
+  .mono{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    white-space:pre-wrap;
+    font-size:12px;
+  }
+
+  .overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15, 23, 42, 0.65);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:20;
+  }
+
+  .overlay.show{
+    display:flex;
+  }
+
+  .modal{
+    width:min(1100px, 100%);
+    max-height:min(92vh, 920px);
+    overflow:auto;
+    background:#fff;
+    border-radius:22px;
+    border:1px solid rgba(148, 163, 184, .35);
+    box-shadow:0 32px 80px rgba(2, 6, 23, 0.32);
+    padding:20px;
+  }
+
+  .modalHeader{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:14px;
+    margin-bottom:16px;
+  }
+
+  .stepper{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin:14px 0 18px;
+  }
+
+  .step{
+    flex:1;
+    min-width:180px;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:12px;
+    background:#f8fafc;
+  }
+
+  .step.active{
+    background:#eff6ff;
+    border-color:#93c5fd;
+  }
+
+  .stepNum{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:24px;
+    height:24px;
+    border-radius:999px;
+    background:#dbeafe;
+    color:#1d4ed8;
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:8px;
+  }
+
+  .step.active .stepNum{
+    background:#2563eb;
+    color:#fff;
+  }
+
+  .reviewGrid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:12px;
+    margin-top:12px;
+  }
+
+  .reviewField{
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:12px;
+    background:#fff;
+  }
+
+  .reviewField.full{
+    grid-column:1 / -1;
+  }
+
+  .reviewFieldTop{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:8px;
+  }
+
+  .reviewField .muted{
+    margin-top:6px;
+    font-size:12px;
+  }
+
+  @media (max-width: 760px){
+    .reviewGrid{
+      grid-template-columns:1fr;
+    }
+  }
+
+  .hidden{
+    display:none !important;
+  }
+
+  footer{
+    padding:18px;
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+  }
 </style>
 
-<!-- OCR + PDF libraries (browser-only, GitHub Pages friendly) -->
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 </head>
 
 <body>
 <header>
-  <div>CRM-DealDesk <span class="small">• OCR • Deal Logic • PDF</span></div>
+  <div>
+    <div class="brand">CRM-DealDesk</div>
+    <div class="small">Static deal desk with Zillow screenshot import, OCR, deal analysis, and PDF export</div>
+  </div>
   <div class="pill" id="statusPill">Ready</div>
 </header>
 
 <div class="wrap">
   <div class="grid">
-    <!-- LEFT: CRM + OCR -->
-    <div class="card">
-      <div class="flex" style="justify-content:space-between">
-        <h2>Deal Intake</h2>
-        <div class="flex">
-          <button class="btn2" onclick="saveDeal()">Save Deal</button>
-          <button class="btnDanger" onclick="clearAll()">Clear All</button>
+    <section class="card">
+      <div class="cardHeader">
+        <div>
+          <div class="eyebrow">New Deal</div>
+          <h2>Deal Intake</h2>
+          <div class="muted">Upload a Zillow screenshot, review the extracted fields, then save the finalized deal when you are ready.</div>
+        </div>
+        <div class="compactActions">
+          <button class="btnAccent" type="button" onclick="openImportModal()">Import from Zillow Screenshot</button>
+          <button class="btnSecondary" type="button" onclick="saveDeal()">Save Deal</button>
+          <button class="btnDanger" type="button" onclick="clearAll()">Clear All</button>
         </div>
       </div>
 
-      <div class="row">
-        <div>
-          <label>Property Address</label>
-          <input id="address" placeholder="123 Main St, Columbus, OH" />
-        </div>
-        <div>
-          <label>Lead Temperature</label>
-          <select id="temp">
-            <option>Hot</option>
-            <option>Warm</option>
-            <option>Cold</option>
-          </select>
-        </div>
+      <div id="importSummary" class="importSummary">
+        <strong>Latest Zillow import</strong>
+        <div class="muted" id="importSummaryText">No Zillow import has been applied yet.</div>
+        <div class="summaryCounts" id="importSummaryCounts"></div>
       </div>
 
-      <div class="row">
-        <div>
-          <label>Seller Name</label>
-          <input id="seller" placeholder="Matthew / Christopher / etc." />
-        </div>
-        <div>
-          <label>Seller Email</label>
-          <input id="email" placeholder="seller@email.com" />
-        </div>
-      </div>
-
-      <div class="row">
-        <div>
-          <label>Asking / Purchase Price ($)</label>
-          <input id="price" type="number" placeholder="95000" />
-        </div>
-        <div>
-          <label>Est. Monthly Rent ($)</label>
-          <input id="rent" type="number" placeholder="1300" />
-        </div>
-      </div>
-
-      <div class="row">
-        <div>
-          <label>Repairs ($)</label>
-          <input id="repairs" type="number" placeholder="0" />
-        </div>
-        <div>
-          <label>ARV ($) (optional)</label>
-          <input id="arv" type="number" placeholder="150000" />
-        </div>
-      </div>
-
-      <div class="row">
-        <div>
-          <label>Mortgage Balance (SubTo) ($)</label>
-          <input id="loanBal" type="number" placeholder="120000" />
-        </div>
-        <div>
-          <label>Interest Rate (SubTo) (%)</label>
-          <input id="rate" type="number" step="0.01" placeholder="5.75" />
-        </div>
-      </div>
-
-      <div class="row">
-        <div>
-          <label>PITI (SubTo) ($/mo) (optional)</label>
-          <input id="piti" type="number" placeholder="980" />
-        </div>
-        <div>
-          <label>Other Monthly Expenses ($/mo)</label>
-          <input id="otherMo" type="number" placeholder="150 (vacancy/maint/PM/etc)" />
-        </div>
-      </div>
-
-      <label>Notes</label>
-      <textarea id="notes" placeholder="Motivation, timeline, liens, agent info, etc."></textarea>
-
-      <div class="card" style="margin-top:14px;border-radius:12px">
-        <h2 style="margin-bottom:6px">📸 Upload Listing Photo → OCR</h2>
-        <div class="muted">Upload a screenshot/photo (listing, chat, flyer). OCR will try to pull price/rent/ARV keywords.</div>
-
-        <div class="split" style="margin-top:10px">
+      <div class="section">
+        <div class="sectionHeader">
           <div>
+            <h3>Property Snapshot</h3>
+            <div class="muted">Core address and physical details used during review and deal analysis.</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="address">Property Address</label>
+            <input id="address" placeholder="123 Main St" />
+          </div>
+          <div>
+            <label for="temp">Lead Temperature</label>
+            <select id="temp">
+              <option>Hot</option>
+              <option>Warm</option>
+              <option>Cold</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row3" style="margin-top:12px">
+          <div>
+            <label for="city">City</label>
+            <input id="city" placeholder="Columbus" />
+          </div>
+          <div>
+            <label for="state">State</label>
+            <input id="state" maxlength="2" placeholder="OH" />
+          </div>
+          <div>
+            <label for="zip">ZIP</label>
+            <input id="zip" inputmode="numeric" placeholder="43215" />
+          </div>
+        </div>
+
+        <div class="row4" style="margin-top:12px">
+          <div>
+            <label for="propertyType">Property Type</label>
+            <input id="propertyType" placeholder="Single family" />
+          </div>
+          <div>
+            <label for="beds">Beds</label>
+            <input id="beds" type="number" step="0.1" placeholder="3" />
+          </div>
+          <div>
+            <label for="baths">Baths</label>
+            <input id="baths" type="number" step="0.1" placeholder="2" />
+          </div>
+          <div>
+            <label for="yearBuilt">Year Built</label>
+            <input id="yearBuilt" type="number" placeholder="1988" />
+          </div>
+        </div>
+
+        <div class="row3" style="margin-top:12px">
+          <div>
+            <label for="squareFeet">Square Feet</label>
+            <input id="squareFeet" type="number" placeholder="1460" />
+          </div>
+          <div>
+            <label for="lotSize">Lot Size</label>
+            <input id="lotSize" placeholder="0.24 acres" />
+          </div>
+          <div>
+            <label for="daysOnMarket">Days on Market</label>
+            <input id="daysOnMarket" type="number" placeholder="14" />
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="sectionHeader">
+          <div>
+            <h3>Pricing and Deal Math</h3>
+            <div class="muted">Imported Zillow values land here and continue to feed the current analyzer and PDF output.</div>
+          </div>
+        </div>
+
+        <div class="row4">
+          <div>
+            <label for="price">Listing / Purchase Price ($)</label>
+            <input id="price" type="number" placeholder="95000" />
+          </div>
+          <div>
+            <label for="zestimate">Zestimate ($)</label>
+            <input id="zestimate" type="number" placeholder="102500" />
+          </div>
+          <div>
+            <label for="rent">Estimated Rent ($)</label>
+            <input id="rent" type="number" placeholder="1300" />
+          </div>
+          <div>
+            <label for="monthlyPayment">Monthly Payment / PITI ($)</label>
+            <input id="monthlyPayment" type="number" placeholder="980" />
+          </div>
+        </div>
+
+        <div class="row4" style="margin-top:12px">
+          <div>
+            <label for="hoaFee">HOA Fee ($)</label>
+            <input id="hoaFee" type="number" placeholder="0" />
+          </div>
+          <div>
+            <label for="repairs">Repairs ($)</label>
+            <input id="repairs" type="number" placeholder="0" />
+          </div>
+          <div>
+            <label for="arv">ARV ($)</label>
+            <input id="arv" type="number" placeholder="150000" />
+          </div>
+          <div>
+            <label for="otherMo">Other Monthly Expenses ($)</label>
+            <input id="otherMo" type="number" placeholder="150" />
+          </div>
+        </div>
+
+        <div class="row3" style="margin-top:12px">
+          <div>
+            <label for="loanBal">Mortgage Balance (SubTo) ($)</label>
+            <input id="loanBal" type="number" placeholder="120000" />
+          </div>
+          <div>
+            <label for="rate">Interest Rate (SubTo) (%)</label>
+            <input id="rate" type="number" step="0.01" placeholder="5.75" />
+          </div>
+          <div>
+            <label for="listingUrl">Listing URL</label>
+            <input id="listingUrl" type="url" placeholder="https://www.zillow.com/..." />
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="sectionHeader">
+          <div>
+            <h3>Contacts and Notes</h3>
+            <div class="muted">Existing CRM fields stay available, with added Zillow agent details for quick follow-up.</div>
+          </div>
+        </div>
+
+        <div class="row4">
+          <div>
+            <label for="seller">Seller Name</label>
+            <input id="seller" placeholder="Seller contact" />
+          </div>
+          <div>
+            <label for="email">Seller Email</label>
+            <input id="email" type="email" placeholder="seller@email.com" />
+          </div>
+          <div>
+            <label for="agentName">Agent Name</label>
+            <input id="agentName" placeholder="Listing agent" />
+          </div>
+          <div>
+            <label for="agentPhone">Agent Phone</label>
+            <input id="agentPhone" type="tel" placeholder="(555) 555-1212" />
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <label for="notes">Notes</label>
+          <textarea id="notes" placeholder="Motivation, timeline, liens, visible listing notes, or follow-up items."></textarea>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="sectionHeader">
+          <div>
+            <h3>OCR and Buyer Output</h3>
+            <div class="muted">The original browser OCR flow still works for non-Zillow screenshots and quick keyword-based extraction.</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="imgInput">Upload Listing Image for OCR</label>
             <input id="imgInput" type="file" accept="image/*" />
-            <button class="btn3" onclick="runOCR()">Run OCR</button>
+            <div class="actions" style="margin-top:10px">
+              <button class="btnAccent" type="button" onclick="runOCR()">Run OCR</button>
+              <button type="button" onclick="extractFromOCR()">Auto-Fill From OCR</button>
+            </div>
           </div>
           <div class="preview" id="imgPreview">
             <div class="muted">Preview shows here.</div>
           </div>
         </div>
 
-        <label>OCR Text (editable)</label>
-        <textarea id="ocrText" class="mono" placeholder="OCR output will appear here..."></textarea>
+        <div style="margin-top:12px">
+          <label for="ocrText">OCR Text (editable)</label>
+          <textarea id="ocrText" class="mono" placeholder="OCR output will appear here..."></textarea>
+        </div>
 
-        <div class="flex">
-          <button onclick="extractFromOCR()">Auto-Fill From OCR</button>
-          <button class="btn2" onclick="analyzeDeal()">Analyze / Recommend Structure</button>
-          <button class="btn3" onclick="exportPDF()">Export PDF for Buyer</button>
+        <div class="actions" style="margin-top:12px">
+          <button class="btnSecondary" type="button" onclick="analyzeDeal()">Analyze / Recommend Structure</button>
+          <button class="btnAccent" type="button" onclick="exportPDF()">Export PDF for Buyer</button>
         </div>
       </div>
 
       <div class="kpi">
         <div class="box">
           <div class="lbl">Gross Rent Yield</div>
-          <div class="num" id="kpiYield">—</div>
+          <div class="num" id="kpiYield">-</div>
         </div>
         <div class="box">
           <div class="lbl">Estimated Monthly Cashflow</div>
-          <div class="num" id="kpiCF">—</div>
+          <div class="num" id="kpiCF">-</div>
         </div>
         <div class="box">
           <div class="lbl">Suggested Strategy</div>
-          <div class="num" id="kpiStrat">—</div>
+          <div class="num" id="kpiStrat">-</div>
         </div>
       </div>
 
-      <div style="margin-top:10px" id="recBox" class="preview">
+      <div style="margin-top:14px" id="recBox" class="preview">
         <div class="muted">Recommendation appears here after Analyze.</div>
+      </div>
+    </section>
+
+    <aside class="card">
+      <div class="cardHeader">
+        <div>
+          <div class="eyebrow">Deals Page</div>
+          <h2>Saved Deals</h2>
+          <div class="muted">Deals continue to save to localStorage in this static app, so existing CRM behavior stays intact.</div>
+        </div>
+        <div class="compactActions">
+          <button class="btnAccent" type="button" onclick="openImportModal()">Import from Zillow Screenshot</button>
+          <button class="btnSecondary" type="button" onclick="exportJSON()">Export JSON</button>
+        </div>
+      </div>
+
+      <div class="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Address</th>
+              <th>Price</th>
+              <th>Rent</th>
+              <th>Score</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="dealTable"></tbody>
+        </table>
+      </div>
+
+      <div style="margin-top:12px">
+        <label for="dealSelect">Select Deal</label>
+        <select id="dealSelect"></select>
+      </div>
+
+      <div class="actions" style="margin-top:12px">
+        <button type="button" onclick="loadSelected()">Load Selected</button>
+        <button class="btnDanger" type="button" onclick="deleteSelected()">Delete Selected</button>
+      </div>
+
+      <div class="tipBox" style="margin-top:14px">
+        <strong>Save path</strong>
+        <div class="muted">Final deals save only after your review to the existing localStorage collection used by the current app.</div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div id="importModal" class="overlay" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div>
+        <div class="eyebrow">Zillow Import</div>
+        <h2>Upload Screenshot -> Review Extracted Deal -> Save Deal</h2>
+        <div class="muted">This static app calls the OpenAI Responses API directly from your browser. The API key is stored only in localStorage on this device.</div>
+      </div>
+      <button class="btnGhost" type="button" style="width:auto;padding:10px 14px" onclick="closeImportModal()">Close</button>
+    </div>
+
+    <div class="stepper">
+      <div class="step" id="stepUpload">
+        <div class="stepNum">1</div>
+        <strong>Upload Screenshot</strong>
+        <div class="muted">Accepts PNG, JPG, JPEG, and WebP Zillow screenshots.</div>
+      </div>
+      <div class="step" id="stepReview">
+        <div class="stepNum">2</div>
+        <strong>Review Extracted Deal</strong>
+        <div class="muted">High confidence, needs review, and missing states are shown field by field.</div>
+      </div>
+      <div class="step" id="stepSave">
+        <div class="stepNum">3</div>
+        <strong>Save Deal</strong>
+        <div class="muted">Apply the reviewed values to the form and save only when the deal is ready.</div>
       </div>
     </div>
 
-    <!-- RIGHT: Pipeline -->
-    <div class="card">
-      <div class="flex" style="justify-content:space-between">
-        <h2>Pipeline</h2>
-        <button class="btn2" onclick="exportJSON()">Export JSON</button>
+    <div class="row" style="margin-bottom:12px">
+      <div>
+        <label for="openAiKey">OpenAI API Key</label>
+        <input id="openAiKey" type="password" placeholder="sk-..." autocomplete="off" />
       </div>
-      <div class="muted">Saved deals live in your browser (localStorage). Cloud login comes next.</div>
+      <div class="tipBox">
+        <strong>Required for AI vision extraction</strong>
+        <div class="muted">If the AI cannot read the screenshot, the review form remains editable so you can finish the deal manually.</div>
+      </div>
+    </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Address</th>
-            <th>Price</th>
-            <th>Rent</th>
-            <th>Score</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="dealTable"></tbody>
-      </table>
+    <div class="row">
+      <div>
+        <label for="zillowImgInput">Zillow Screenshot</label>
+        <input id="zillowImgInput" type="file" accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp" />
 
-      <div class="flex" style="margin-top:10px">
-        <button onclick="loadSelected()">Load Selected</button>
-        <button class="btnDanger" onclick="deleteSelected()">Delete Selected</button>
+        <div class="actions" style="margin-top:12px">
+          <button class="btnAccent" id="readZillowBtn" type="button" onclick="readZillowScreenshot()">Reading Zillow screenshot...</button>
+          <button class="btnGhost" type="button" onclick="resetImportFlow(false)">Reset Import</button>
+        </div>
+
+        <div id="processingNote" class="tipBox hidden" style="margin-top:12px">
+          <strong>Reading Zillow screenshot...</strong>
+          <div class="muted">The image is being sent to the AI vision extraction function and validated before the review screen opens.</div>
+        </div>
+
+        <div id="importError" class="errorBox hidden" style="margin-top:12px"></div>
       </div>
 
-      <label style="margin-top:10px">Select Deal</label>
-      <select id="dealSelect"></select>
+      <div class="preview" id="zillowPreview">
+        <div class="muted">Upload a Zillow screenshot to preview it here.</div>
+      </div>
+    </div>
 
-      <div class="preview" style="margin-top:10px">
-        <div class="muted">Tip: If you want cloud + login, easiest free setup is <b>Supabase</b>. I can wire it in once your Pages deploy is fixed.</div>
+    <div id="reviewPanel" class="section hidden">
+      <div class="sectionHeader">
+        <div>
+          <h3>Review Extracted Deal</h3>
+          <div class="muted">Correct anything that looks off before the data is mapped into the deal form.</div>
+        </div>
+      </div>
+
+      <div class="summaryCounts" id="reviewCounts"></div>
+      <div id="reviewGrid" class="reviewGrid"></div>
+
+      <div class="actions" style="margin-top:14px">
+        <button type="button" onclick="applyReviewToForm()">Apply to Deal Form</button>
+        <button class="btnSecondary" type="button" onclick="refreshReviewConfidence()">Refresh Confidence</button>
       </div>
     </div>
   </div>
 </div>
 
-<footer>CRM-DealDesk • Static (GitHub Pages) • OCR + PDF runs in-browser</footer>
+<footer>CRM-DealDesk - Static GitHub Pages style app - Zillow import + OCR + PDF all run without changing the existing save collection.</footer>
 
 <script>
-  // ---------- Helpers ----------
-  const $ = (id)=>document.getElementById(id);
-  const setStatus = (txt)=>{$('statusPill').textContent = txt;};
-  const money = (n)=> (isFinite(n) ? "$" + Number(n).toLocaleString() : "—");
+  const $ = (id) => document.getElementById(id);
+  const STORAGE_KEY = "deals_v1";
+  const OPENAI_KEY_STORAGE = "crm_dealdesk_openai_key";
+  const ZILLOW_ALLOWED_TYPES = ["image/png", "image/jpeg", "image/webp"];
+  const ZILLOW_MAX_FILE_MB = 15;
 
-  // ---------- Storage ----------
-  let deals = JSON.parse(localStorage.getItem("deals_v1") || "[]");
+  const fieldDefs = [
+    { key: "propertyAddress", label: "Property Address", helper: "Street address line shown on Zillow.", required: true },
+    { key: "city", label: "City" },
+    { key: "state", label: "State" },
+    { key: "zip", label: "ZIP" },
+    { key: "listingPrice", label: "Listing Price", helper: "Primary asking price.", required: true },
+    { key: "zestimate", label: "Zestimate" },
+    { key: "estimatedRent", label: "Estimated Rent" },
+    { key: "beds", label: "Beds" },
+    { key: "baths", label: "Baths" },
+    { key: "squareFeet", label: "Square Feet" },
+    { key: "lotSize", label: "Lot Size" },
+    { key: "yearBuilt", label: "Year Built" },
+    { key: "propertyType", label: "Property Type" },
+    { key: "daysOnMarket", label: "Days on Market" },
+    { key: "hoaFee", label: "HOA Fee" },
+    { key: "monthlyPayment", label: "Monthly Payment" },
+    { key: "agentName", label: "Agent Name" },
+    { key: "agentPhone", label: "Agent Phone" },
+    { key: "listingUrl", label: "Listing URL" },
+    { key: "notes", label: "Notes", full: true, helper: "Anything visible in the screenshot that may help review the deal." }
+  ];
+
+  const numericImportKeys = new Set([
+    "listingPrice",
+    "zestimate",
+    "estimatedRent",
+    "beds",
+    "baths",
+    "squareFeet",
+    "yearBuilt",
+    "daysOnMarket",
+    "hoaFee",
+    "monthlyPayment"
+  ]);
+
+  const reviewState = {
+    file: null,
+    previewUrl: "",
+    extracted: blankExtractedData(),
+    confidence: {},
+    error: "",
+    lastStep: "upload"
+  };
+
+  let deals = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  let lastImportMeta = null;
+
+  function blankExtractedData(){
+    return fieldDefs.reduce((acc, field) => {
+      acc[field.key] = "";
+      return acc;
+    }, {});
+  }
+
+  function setStatus(text){
+    $("statusPill").textContent = text;
+  }
+
+  function money(value){
+    return isFinite(value) ? "$" + Number(value).toLocaleString() : "-";
+  }
+
+  function toNumberOrNull(value){
+    if (value === null || value === undefined) return null;
+    const cleaned = String(value).replace(/[^0-9.-]/g, "");
+    if (!cleaned) return null;
+    const parsed = Number(cleaned);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+
+  function displayValue(value){
+    return value === null || value === undefined ? "" : String(value);
+  }
+
+  function joinAddress(deal){
+    const base = (deal.address || deal.propertyAddress || "").trim();
+    const city = (deal.city || "").trim();
+    const state = (deal.state || "").trim();
+    const zip = (deal.zip || "").trim();
+    const tail = [city, state, zip].filter(Boolean).join(", ").replace(", ,", ", ");
+    if (!base) return tail || "-";
+    if (!tail) return base;
+    const full = `${base}, ${tail}`;
+    return full.replace(", ,", ", ");
+  }
+
+  function getTemperatureClass(temp){
+    return temp === "Hot" ? "temp-hot" : temp === "Warm" ? "temp-warm" : "temp-cold";
+  }
+
+  function getScoreClass(score){
+    return score >= 75 ? "score-good" : score >= 55 ? "score-warn" : "score-bad";
+  }
+
+  function getConfidenceClass(status){
+    if (status === "High confidence") return "confidence-high";
+    if (status === "Needs review") return "confidence-review";
+    return "confidence-missing";
+  }
+
+  function showImportError(message){
+    const box = $("importError");
+    box.textContent = message;
+    box.classList.remove("hidden");
+  }
+
+  function hideImportError(){
+    $("importError").classList.add("hidden");
+    $("importError").textContent = "";
+  }
+
+  function showProcessing(show){
+    $("processingNote").classList.toggle("hidden", !show);
+    $("readZillowBtn").disabled = show;
+    $("readZillowBtn").textContent = show ? "Reading Zillow screenshot..." : "Read Zillow Screenshot";
+  }
+
+  function setImportStep(step){
+    reviewState.lastStep = step;
+    $("stepUpload").classList.toggle("active", step === "upload");
+    $("stepReview").classList.toggle("active", step === "review");
+    $("stepSave").classList.toggle("active", step === "review");
+    $("reviewPanel").classList.toggle("hidden", step !== "review");
+  }
 
   function persist(){
-    localStorage.setItem("deals_v1", JSON.stringify(deals));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(deals));
     renderPipeline();
   }
 
+  function currentDeal(){
+    const monthlyPayment = toNumberOrNull($("monthlyPayment").value);
+    return {
+      id: crypto.randomUUID(),
+      created: new Date().toISOString(),
+      address: $("address").value.trim(),
+      propertyAddress: $("address").value.trim(),
+      city: $("city").value.trim(),
+      state: $("state").value.trim().toUpperCase(),
+      zip: $("zip").value.trim(),
+      temp: $("temp").value,
+      propertyType: $("propertyType").value.trim(),
+      beds: toNumberOrNull($("beds").value),
+      baths: toNumberOrNull($("baths").value),
+      squareFeet: toNumberOrNull($("squareFeet").value),
+      lotSize: $("lotSize").value.trim(),
+      yearBuilt: toNumberOrNull($("yearBuilt").value),
+      daysOnMarket: toNumberOrNull($("daysOnMarket").value),
+      seller: $("seller").value.trim(),
+      email: $("email").value.trim(),
+      price: toNumberOrNull($("price").value),
+      listingPrice: toNumberOrNull($("price").value),
+      zestimate: toNumberOrNull($("zestimate").value),
+      rent: toNumberOrNull($("rent").value),
+      estimatedRent: toNumberOrNull($("rent").value),
+      repairs: toNumberOrNull($("repairs").value),
+      arv: toNumberOrNull($("arv").value),
+      loanBal: toNumberOrNull($("loanBal").value),
+      rate: toNumberOrNull($("rate").value),
+      piti: monthlyPayment,
+      monthlyPayment,
+      hoaFee: toNumberOrNull($("hoaFee").value),
+      otherMo: toNumberOrNull($("otherMo").value),
+      agentName: $("agentName").value.trim(),
+      agentPhone: $("agentPhone").value.trim(),
+      listingUrl: $("listingUrl").value.trim(),
+      notes: $("notes").value.trim(),
+      ocrText: $("ocrText").value.trim(),
+      importMeta: lastImportMeta ? structuredClone(lastImportMeta) : null
+    };
+  }
+
+  function updateImportSummary(meta){
+    const box = $("importSummary");
+    const text = $("importSummaryText");
+    const counts = $("importSummaryCounts");
+
+    if (!meta){
+      box.classList.remove("show");
+      text.textContent = "No Zillow import has been applied yet.";
+      counts.innerHTML = "";
+      return;
+    }
+
+    box.classList.add("show");
+    text.textContent = `${meta.fileName || "Zillow screenshot"} was applied to the form. Review any fields marked as needing attention before you save.`;
+
+    const summary = summarizeConfidence(meta.confidence);
+    counts.innerHTML = `
+      <span class="badge confidence-high">${summary.high} High confidence</span>
+      <span class="badge confidence-review">${summary.review} Needs review</span>
+      <span class="badge confidence-missing">${summary.missing} Missing</span>
+    `;
+  }
+
+  function resetForm(){
+    [
+      "address","city","state","zip","seller","email","price","zestimate","rent","repairs","arv","loanBal","rate",
+      "monthlyPayment","hoaFee","otherMo","notes","ocrText","propertyType","beds","baths","squareFeet","lotSize",
+      "yearBuilt","daysOnMarket","agentName","agentPhone","listingUrl"
+    ].forEach((id) => {
+      $(id).value = "";
+    });
+
+    $("temp").value = "Hot";
+    $("imgPreview").innerHTML = '<div class="muted">Preview shows here.</div>';
+    $("recBox").innerHTML = '<div class="muted">Recommendation appears here after Analyze.</div>';
+    $("kpiYield").textContent = "-";
+    $("kpiCF").textContent = "-";
+    $("kpiStrat").textContent = "-";
+    $("imgInput").value = "";
+    lastImportMeta = null;
+    updateImportSummary(null);
+  }
+
   function clearAll(){
-    if(!confirm("Clear all deals + form?")) return;
+    if (!confirm("Clear all deals and reset the form?")) return;
     deals = [];
     persist();
     resetForm();
     setStatus("Cleared");
   }
 
-  function resetForm(){
-    ["address","seller","email","price","rent","repairs","arv","loanBal","rate","piti","otherMo","notes","ocrText"].forEach(id=>$(id).value="");
-    $('imgPreview').innerHTML = '<div class="muted">Preview shows here.</div>';
-    $('recBox').innerHTML = '<div class="muted">Recommendation appears here after Analyze.</div>';
-    $('kpiYield').textContent = "—";
-    $('kpiCF').textContent = "—";
-    $('kpiStrat').textContent = "—";
-  }
-
-  // ---------- Save / Load ----------
-  function currentDeal(){
-    return {
-      id: crypto.randomUUID(),
-      created: new Date().toISOString(),
-      address: $('address').value.trim(),
-      temp: $('temp').value,
-      seller: $('seller').value.trim(),
-      email: $('email').value.trim(),
-      price: Number($('price').value || 0),
-      rent: Number($('rent').value || 0),
-      repairs: Number($('repairs').value || 0),
-      arv: Number($('arv').value || 0),
-      loanBal: Number($('loanBal').value || 0),
-      rate: Number($('rate').value || 0),
-      piti: Number($('piti').value || 0),
-      otherMo: Number($('otherMo').value || 0),
-      notes: $('notes').value.trim(),
-      ocrText: $('ocrText').value || ""
-    };
-  }
-
   function saveDeal(){
-    const d = currentDeal();
-    if(!d.address || !d.price){
-      alert("Need at least Address + Price to save.");
+    const deal = currentDeal();
+    if (!deal.address || !deal.price){
+      alert("Missing required fields: Property Address and Listing / Purchase Price are required before saving.");
       return;
     }
-    const analysis = analyzeNumbers(d);
-    d.score = analysis.score;
-    d.suggested = analysis.suggested;
-    d.cashflow = analysis.cashflow;
-    d.yield = analysis.yieldPct;
 
-    deals.unshift(d);
+    const analysis = analyzeNumbers(deal);
+    deal.score = analysis.score;
+    deal.suggested = analysis.suggested;
+    deal.cashflow = analysis.cashflow;
+    deal.yield = analysis.yieldPct;
+
+    deals.unshift(deal);
     persist();
     setStatus("Saved");
   }
 
   function renderPipeline(){
-    const tbody = $('dealTable');
+    const tbody = $("dealTable");
+    const select = $("dealSelect");
     tbody.innerHTML = "";
-    const sel = $('dealSelect');
-    sel.innerHTML = "";
+    select.innerHTML = "";
 
-    deals.forEach((d, idx)=>{
-      const opt = document.createElement("option");
-      opt.value = d.id;
-      opt.textContent = `${idx+1}. ${d.address}`;
-      sel.appendChild(opt);
-
-      const score = (d.score ?? 0);
-      const scoreClass = score >= 75 ? "ok" : score >= 55 ? "warn" : "bad";
-      const tempClass = d.temp==="Hot" ? "hot" : d.temp==="Warm" ? "warm" : "cold";
-
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>
-          <div style="font-weight:700">${escapeHtml(d.address)}</div>
-          <div class="muted">${escapeHtml(d.suggested || "—")}</div>
-        </td>
-        <td>${money(d.price)}</td>
-        <td>${money(d.rent)}</td>
-        <td><span class="badge ${scoreClass}">${score}</span></td>
-        <td><span class="badge ${tempClass}">${escapeHtml(d.temp)}</span></td>
-      `;
-      tbody.appendChild(tr);
-    });
-
-    if(deals.length===0){
-      tbody.innerHTML = `<tr><td colspan="5" class="muted">No deals saved yet.</td></tr>`;
-      const opt = document.createElement("option");
-      opt.textContent = "—";
-      opt.value = "";
-      sel.appendChild(opt);
+    if (deals.length === 0){
+      tbody.innerHTML = '<tr><td colspan="5" class="muted">No deals saved yet.</td></tr>';
+      const empty = document.createElement("option");
+      empty.value = "";
+      empty.textContent = "-";
+      select.appendChild(empty);
+      return;
     }
+
+    deals.forEach((deal, index) => {
+      const option = document.createElement("option");
+      option.value = deal.id;
+      option.textContent = `${index + 1}. ${joinAddress(deal)}`;
+      select.appendChild(option);
+
+      const score = Number(deal.score || 0);
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>
+          <strong>${escapeHtml(joinAddress(deal))}</strong>
+          <div class="muted">${escapeHtml(deal.suggested || "-")}</div>
+        </td>
+        <td>${money(Number(deal.price || deal.listingPrice || 0))}</td>
+        <td>${money(Number(deal.rent || deal.estimatedRent || 0))}</td>
+        <td><span class="badge ${getScoreClass(score)}">${score}</span></td>
+        <td><span class="badge ${getTemperatureClass(deal.temp || "Warm")}">${escapeHtml(deal.temp || "Warm")}</span></td>
+      `;
+      tbody.appendChild(row);
+    });
   }
 
   function loadSelected(){
-    const id = $('dealSelect').value;
-    const d = deals.find(x=>x.id===id);
-    if(!d){ alert("Select a deal first."); return; }
+    const id = $("dealSelect").value;
+    const deal = deals.find((item) => item.id === id);
+    if (!deal){
+      alert("Select a deal first.");
+      return;
+    }
 
-    $('address').value = d.address || "";
-    $('temp').value = d.temp || "Warm";
-    $('seller').value = d.seller || "";
-    $('email').value = d.email || "";
-    $('price').value = d.price || "";
-    $('rent').value = d.rent || "";
-    $('repairs').value = d.repairs || "";
-    $('arv').value = d.arv || "";
-    $('loanBal').value = d.loanBal || "";
-    $('rate').value = d.rate || "";
-    $('piti').value = d.piti || "";
-    $('otherMo').value = d.otherMo || "";
-    $('notes').value = d.notes || "";
-    $('ocrText').value = d.ocrText || "";
+    $("address").value = displayValue(deal.address || deal.propertyAddress);
+    $("city").value = displayValue(deal.city);
+    $("state").value = displayValue(deal.state);
+    $("zip").value = displayValue(deal.zip);
+    $("temp").value = deal.temp || "Warm";
+    $("propertyType").value = displayValue(deal.propertyType);
+    $("beds").value = displayValue(deal.beds);
+    $("baths").value = displayValue(deal.baths);
+    $("squareFeet").value = displayValue(deal.squareFeet);
+    $("lotSize").value = displayValue(deal.lotSize);
+    $("yearBuilt").value = displayValue(deal.yearBuilt);
+    $("daysOnMarket").value = displayValue(deal.daysOnMarket);
+    $("seller").value = displayValue(deal.seller);
+    $("email").value = displayValue(deal.email);
+    $("price").value = displayValue(deal.price || deal.listingPrice);
+    $("zestimate").value = displayValue(deal.zestimate);
+    $("rent").value = displayValue(deal.rent || deal.estimatedRent);
+    $("repairs").value = displayValue(deal.repairs);
+    $("arv").value = displayValue(deal.arv);
+    $("loanBal").value = displayValue(deal.loanBal);
+    $("rate").value = displayValue(deal.rate);
+    $("monthlyPayment").value = displayValue(deal.monthlyPayment || deal.piti);
+    $("hoaFee").value = displayValue(deal.hoaFee);
+    $("otherMo").value = displayValue(deal.otherMo);
+    $("agentName").value = displayValue(deal.agentName);
+    $("agentPhone").value = displayValue(deal.agentPhone);
+    $("listingUrl").value = displayValue(deal.listingUrl);
+    $("notes").value = displayValue(deal.notes);
+    $("ocrText").value = displayValue(deal.ocrText);
 
+    lastImportMeta = deal.importMeta || null;
+    updateImportSummary(lastImportMeta);
     analyzeDeal();
     setStatus("Loaded");
   }
 
   function deleteSelected(){
-    const id = $('dealSelect').value;
-    if(!id) return;
-    if(!confirm("Delete selected deal?")) return;
-    deals = deals.filter(d=>d.id!==id);
+    const id = $("dealSelect").value;
+    if (!id) return;
+    if (!confirm("Delete selected deal?")) return;
+    deals = deals.filter((deal) => deal.id !== id);
     persist();
     setStatus("Deleted");
   }
 
   function exportJSON(){
-    const blob = new Blob([JSON.stringify(deals, null, 2)], {type:"application/json"});
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "crm-deals.json";
-    a.click();
-    URL.revokeObjectURL(a.href);
+    const blob = new Blob([JSON.stringify(deals, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "crm-deals.json";
+    link.click();
+    URL.revokeObjectURL(url);
+    setStatus("JSON exported");
   }
 
-  // ---------- OCR ----------
-  $('imgInput').addEventListener('change', (e)=>{
-    const file = e.target.files?.[0];
-    if(!file) return;
-    const url = URL.createObjectURL(file);
-    $('imgPreview').innerHTML = `<img alt="preview" src="${url}">`;
-  });
+  function analyzeNumbers(deal){
+    const price = Number(deal.price || deal.listingPrice || 0);
+    const rent = Number(deal.rent || deal.estimatedRent || 0);
+    const repairs = Number(deal.repairs || 0);
+    const arv = Number(deal.arv || 0);
+    const otherMo = Number(deal.otherMo || 0);
+    const piti = Number(deal.monthlyPayment || deal.piti || 0);
+    const loanBal = Number(deal.loanBal || 0);
+    const rate = Number(deal.rate || 0);
 
-  async function runOCR(){
-    const file = $('imgInput').files?.[0];
-    if(!file){
-      alert("Upload an image first.");
-      return;
-    }
-    setStatus("OCR running...");
-    $('ocrText').value = "";
+    const yieldPct = price > 0 ? ((rent * 12) / price) * 100 : 0;
+    const baseMo = rent - piti - otherMo;
+    const cashflow = Number.isFinite(baseMo) ? Math.round(baseMo) : 0;
+    const flipSpread = arv > 0 ? arv - price - repairs : 0;
 
-    try{
-      const { data } = await Tesseract.recognize(file, 'eng', {
-        logger: m => { if(m.status) setStatus(`OCR: ${m.status} ${Math.round((m.progress||0)*100)}%`); }
-      });
-      $('ocrText').value = (data.text || "").trim();
-      setStatus("OCR complete");
-    }catch(err){
-      console.error(err);
-      setStatus("OCR failed");
-      alert("OCR failed. Try a clearer screenshot (zoom in on the numbers).");
-    }
-  }
-
-  function extractFromOCR(){
-    const txt = ($('ocrText').value || "").replace(/,/g,"");
-    if(!txt.trim()){
-      alert("No OCR text yet.");
-      return;
-    }
-
-    // Pull likely dollar amounts (very heuristic)
-    const dollars = [...txt.matchAll(/\$?\s?(\d{2,7})(?:\.\d{2})?/g)].map(m=>Number(m[1])).filter(n=>n>=100);
-    // Attempt keyword-based picks
-    const priceGuess = findNearKeyword(txt, ["price","asking","list","sale","purchase","$"], 4000) || maxInRange(dollars, 30000, 1500000);
-    const rentGuess  = findNearKeyword(txt, ["rent","monthly","lease"], 2000) || maxInRange(dollars, 400, 8000);
-    const arvGuess   = findNearKeyword(txt, ["arv","after repair value","value"], 4000) || 0;
-
-    if(priceGuess && !$('price').value) $('price').value = priceGuess;
-    if(rentGuess && !$('rent').value) $('rent').value = rentGuess;
-    if(arvGuess && !$('arv').value) $('arv').value = arvGuess;
-
-    setStatus("Auto-filled from OCR");
-    analyzeDeal();
-  }
-
-  function findNearKeyword(text, keywords, maxVal){
-    const lower = text.toLowerCase();
-    for(const k of keywords){
-      const idx = lower.indexOf(k);
-      if(idx !== -1){
-        const slice = text.slice(idx, idx+180);
-        const m = slice.replace(/,/g,"").match(/(\d{2,7})/);
-        if(m){
-          const n = Number(m[1]);
-          if(n>0 && n<=maxVal) return n;
-        }
-      }
-    }
-    return 0;
-  }
-  function maxInRange(arr, lo, hi){
-    const filtered = arr.filter(n=>n>=lo && n<=hi);
-    return filtered.length ? Math.max(...filtered) : 0;
-  }
-
-  // ---------- Deal logic (AI-ish without API key) ----------
-  function analyzeNumbers(d){
-    const price = Number(d.price||0);
-    const rent = Number(d.rent||0);
-    const repairs = Number(d.repairs||0);
-    const arv = Number(d.arv||0);
-    const otherMo = Number(d.otherMo||0);
-    const piti = Number(d.piti||0);
-    const loanBal = Number(d.loanBal||0);
-    const rate = Number(d.rate||0);
-
-    const yieldPct = (price>0) ? ((rent*12)/price*100) : 0;
-
-    // cashflow: if PITI given, use it; else approximate as 0 (you can fill later)
-    const baseMo = rent - (piti || 0) - otherMo;
-    const cashflow = isFinite(baseMo) ? Math.round(baseMo) : 0;
-
-    // Flip spread if ARV provided
-    const flipSpread = (arv>0) ? (arv - price - repairs) : 0;
-
-    // Score weights
     let score = 0;
-    // Yield
-    if(yieldPct >= 12) score += 40;
-    else if(yieldPct >= 10) score += 32;
-    else if(yieldPct >= 8) score += 22;
-    else if(yieldPct >= 6) score += 12;
+    if (yieldPct >= 12) score += 40;
+    else if (yieldPct >= 10) score += 32;
+    else if (yieldPct >= 8) score += 22;
+    else if (yieldPct >= 6) score += 12;
     else score += 5;
 
-    // Cashflow
-    if(cashflow >= 300) score += 30;
-    else if(cashflow >= 150) score += 22;
-    else if(cashflow >= 0) score += 14;
+    if (cashflow >= 300) score += 30;
+    else if (cashflow >= 150) score += 22;
+    else if (cashflow >= 0) score += 14;
     else score += 4;
 
-    // Flip spread
-    if(flipSpread >= 40000) score += 20;
-    else if(flipSpread >= 25000) score += 14;
-    else if(flipSpread >= 15000) score += 8;
-    else if(flipSpread > 0) score += 4;
+    if (flipSpread >= 40000) score += 20;
+    else if (flipSpread >= 25000) score += 14;
+    else if (flipSpread >= 15000) score += 8;
+    else if (flipSpread > 0) score += 4;
 
-    // Strategy recommendation
     let suggested = "Cash (or Hard Money)";
     const reasons = [];
 
-    if(piti && rent){
-      const dcr = rent / (piti + otherMo + 1);
-      if(dcr >= 1.25 && (loanBal>0 || rate>0)){
+    if (piti && rent){
+      const coverage = rent / (piti + otherMo + 1);
+      if (coverage >= 1.25 && (loanBal > 0 || rate > 0)){
         suggested = "Subject-To (SubTo) / Take over payments";
-        reasons.push(`Rent covers payment comfortably (coverage ~${dcr.toFixed(2)}x).`);
+        reasons.push(`Rent covers payment comfortably (coverage about ${coverage.toFixed(2)}x).`);
       }
     }
 
-    if(yieldPct < 7 && flipSpread > 25000){
+    if (yieldPct < 7 && flipSpread > 25000){
       suggested = "Flip / Wholetail (value play)";
-      reasons.push("Low rent yield but strong equity spread vs ARV.");
+      reasons.push("Low rent yield but strong equity spread versus ARV.");
     }
 
-    if(yieldPct >= 10 && cashflow >= 150){
-      suggested = "Buy & Hold (Rental)";
-      reasons.push("Strong rent yield + positive cashflow.");
+    if (yieldPct >= 10 && cashflow >= 150){
+      suggested = "Buy and Hold (Rental)";
+      reasons.push("Strong rent yield plus positive cashflow.");
     }
 
-    // Seller finance tends to be best when: yield mediocre but terms can fix it
-    if(yieldPct >= 7 && yieldPct < 10){
-      suggested = "Seller Finance (make terms create the deal)";
-      reasons.push("Yield is close; better terms can push it into ‘buy box’.");
+    if (yieldPct >= 7 && yieldPct < 10){
+      suggested = "Seller Finance (terms can improve the deal)";
+      reasons.push("Yield is close enough that better terms can move it into the buy box.");
     }
 
-    // Cap score 0-100
     score = Math.max(0, Math.min(100, Math.round(score)));
-
     return { score, suggested, yieldPct: Number(yieldPct.toFixed(2)), cashflow, flipSpread, reasons };
   }
 
   function analyzeDeal(){
-    const d = currentDeal();
-    if(!d.price || !d.rent){
-      $('recBox').innerHTML = `<div class="muted">Enter at least Price + Rent (or OCR them), then Analyze.</div>`;
+    const deal = currentDeal();
+    if (!deal.price || !deal.rent){
+      $("recBox").innerHTML = '<div class="muted">Enter at least Listing Price and Estimated Rent, or import them from Zillow, then Analyze.</div>';
       return;
     }
 
-    const a = analyzeNumbers(d);
+    const analysis = analyzeNumbers(deal);
+    $("kpiYield").textContent = analysis.yieldPct ? `${analysis.yieldPct.toFixed(2)}%` : "-";
+    $("kpiCF").textContent = Number.isFinite(analysis.cashflow) ? `${money(analysis.cashflow)} /mo` : "-";
+    $("kpiStrat").textContent = analysis.suggested || "-";
 
-    $('kpiYield').textContent = a.yieldPct ? (a.yieldPct.toFixed(2) + "%") : "—";
-    $('kpiCF').textContent = isFinite(a.cashflow) ? (money(a.cashflow).replace(",","") + " /mo") : "—";
-    $('kpiStrat').textContent = a.suggested || "—";
+    const reasons = (analysis.reasons.length ? analysis.reasons : ["Based on your inputs, this structure best fits the numbers."])
+      .map((item) => `<li>${escapeHtml(item)}</li>`)
+      .join("");
 
-    const scoreClass = a.score >= 75 ? "ok" : a.score >= 55 ? "warn" : "bad";
-
-    const bullets = [
-      `Gross rent yield: <b>${a.yieldPct.toFixed(2)}%</b>`,
-      `Estimated monthly cashflow: <b>${money(a.cashflow)}</b> (needs PITI/expenses to be accurate)`,
-      a.flipSpread ? `ARV spread: <b>${money(a.flipSpread)}</b>` : `ARV spread: <span class="muted">ARV not provided</span>`
-    ];
-
-    const reasons = (a.reasons.length ? a.reasons : ["Based on your inputs, this structure best fits the numbers."])
-      .map(r=>`<li>${escapeHtml(r)}</li>`).join("");
-
-    $('recBox').innerHTML = `
-      <div class="flex" style="justify-content:space-between;align-items:flex-start">
-        <div>
+    $("recBox").innerHTML = `
+      <div class="actions" style="align-items:flex-start">
+        <div class="preview" style="flex:1;min-width:180px">
           <div class="muted">Deal Score</div>
-          <div style="font-size:26px;font-weight:900;line-height:1"><span class="badge ${scoreClass}" style="font-size:16px;padding:6px 12px">${a.score}/100</span></div>
+          <div style="margin-top:8px"><span class="badge ${getScoreClass(analysis.score)}" style="font-size:16px;padding:8px 14px">${analysis.score}/100</span></div>
         </div>
-        <div style="text-align:right">
-          <div class="muted">Recommended</div>
-          <div style="font-size:16px;font-weight:900">${escapeHtml(a.suggested)}</div>
+        <div class="preview" style="flex:2;min-width:220px">
+          <div class="muted">Recommended Structure</div>
+          <div style="margin-top:8px;font-size:18px;font-weight:800">${escapeHtml(analysis.suggested)}</div>
+          <ul style="margin:10px 0 0 18px;padding:0">
+            <li>Gross rent yield: <strong>${analysis.yieldPct.toFixed(2)}%</strong></li>
+            <li>Estimated monthly cashflow: <strong>${money(analysis.cashflow)}</strong></li>
+            <li>ARV spread: <strong>${analysis.flipSpread ? money(analysis.flipSpread) : "-"}</strong></li>
+          </ul>
         </div>
       </div>
-      <ul style="margin:10px 0 0 18px">${bullets.map(b=>`<li>${b}</li>`).join("")}</ul>
-      <div class="muted" style="margin-top:8px;font-weight:700">Why this makes sense</div>
-      <ul style="margin:6px 0 0 18px">${reasons}</ul>
+      <div class="muted" style="margin-top:12px;font-weight:700">Why this makes sense</div>
+      <ul style="margin:8px 0 0 18px;padding:0">${reasons}</ul>
     `;
 
     setStatus("Analyzed");
   }
 
-  // ---------- PDF Export ----------
   function exportPDF(){
-    const d = currentDeal();
-    const a = analyzeNumbers(d);
-
+    const deal = currentDeal();
+    const analysis = analyzeNumbers(deal);
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
     const lines = [
-      "CRM-DealDesk — Buyer Summary",
+      "CRM-DealDesk - Buyer Summary",
       "",
-      `Address: ${d.address || "—"}`,
-      `Seller: ${d.seller || "—"}   Email: ${d.email || "—"}`,
+      `Address: ${joinAddress(deal)}`,
+      `Property Type: ${deal.propertyType || "-"}   Beds/Baths: ${displayValue(deal.beds) || "-"} / ${displayValue(deal.baths) || "-"}`,
+      `Square Feet: ${displayValue(deal.squareFeet) || "-"}   Lot Size: ${deal.lotSize || "-"}   Year Built: ${displayValue(deal.yearBuilt) || "-"}`,
       "",
-      `Price: ${money(d.price)}   Rent: ${money(d.rent)}/mo   Repairs: ${money(d.repairs)}`,
-      `ARV: ${d.arv ? money(d.arv) : "—"}`,
+      `Price: ${money(deal.price || 0)}   Zestimate: ${deal.zestimate ? money(deal.zestimate) : "-"}`,
+      `Estimated Rent: ${money(deal.rent || 0)}/mo   Monthly Payment: ${deal.monthlyPayment ? money(deal.monthlyPayment) + "/mo" : "-"}`,
+      `HOA Fee: ${deal.hoaFee ? money(deal.hoaFee) : "-"}   Other Monthly Expenses: ${deal.otherMo ? money(deal.otherMo) + "/mo" : "-"}`,
+      `Repairs: ${deal.repairs ? money(deal.repairs) : "-"}   ARV: ${deal.arv ? money(deal.arv) : "-"}`,
       "",
-      `SubTo: LoanBal ${d.loanBal ? money(d.loanBal) : "—"}   Rate ${d.rate ? (d.rate+"%") : "—"}   PITI ${d.piti ? money(d.piti)+"/mo" : "—"}`,
-      `Other Monthly Expenses: ${d.otherMo ? money(d.otherMo)+"/mo" : "—"}`,
+      `Agent: ${deal.agentName || "-"}   Phone: ${deal.agentPhone || "-"}`,
+      `Listing URL: ${deal.listingUrl || "-"}`,
       "",
-      `Deal Score: ${a.score}/100`,
-      `Suggested Strategy: ${a.suggested}`,
-      `Gross Rent Yield: ${a.yieldPct.toFixed(2)}%`,
-      `Est. Monthly Cashflow: ${money(a.cashflow)}`,
+      `Deal Score: ${analysis.score}/100`,
+      `Suggested Strategy: ${analysis.suggested}`,
+      `Gross Rent Yield: ${analysis.yieldPct.toFixed(2)}%`,
+      `Estimated Monthly Cashflow: ${money(analysis.cashflow)}`,
       "",
       "Notes:",
-      d.notes || "—"
+      deal.notes || "-"
     ];
 
-    doc.setFont("helvetica","normal");
+    let y = 16;
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
 
-    let y=14;
-    lines.forEach(t=>{
-      const split = doc.splitTextToSize(String(t), 180);
-      split.forEach(s=>{
-        doc.text(s, 14, y);
-        y+=7;
-        if(y>280){ doc.addPage(); y=14; }
+    lines.forEach((line) => {
+      const wrapped = doc.splitTextToSize(String(line), 180);
+      wrapped.forEach((segment) => {
+        doc.text(segment, 14, y);
+        y += 7;
+        if (y > 280){
+          doc.addPage();
+          y = 16;
+        }
       });
     });
 
-    const fname = (d.address ? d.address.replace(/[^\w\s-]/g,"").slice(0,40).trim().replace(/\s+/g,"_") : "deal")
-      + "_buyer_summary.pdf";
-    doc.save(fname);
+    const nameBase = (deal.address || "deal").replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "_").slice(0, 50) || "deal";
+    doc.save(`${nameBase}_buyer_summary.pdf`);
     setStatus("PDF exported");
   }
 
-  // ---------- Safe HTML ----------
-  function escapeHtml(str){
-    return String(str ?? "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
+  function escapeHtml(value){
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
-  // Init
+  $("imgInput").addEventListener("change", (event) => {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    const preview = URL.createObjectURL(file);
+    $("imgPreview").innerHTML = `<img alt="OCR preview" src="${preview}">`;
+  });
+
+  async function runOCR(){
+    const file = $("imgInput").files && $("imgInput").files[0];
+    if (!file){
+      alert("Upload an image first.");
+      return;
+    }
+
+    setStatus("OCR running...");
+    $("ocrText").value = "";
+
+    try{
+      const { data } = await Tesseract.recognize(file, "eng", {
+        logger: (message) => {
+          if (message.status){
+            setStatus(`OCR: ${message.status} ${Math.round((message.progress || 0) * 100)}%`);
+          }
+        }
+      });
+      $("ocrText").value = (data.text || "").trim();
+      setStatus("OCR complete");
+    }catch(error){
+      console.error(error);
+      setStatus("OCR failed");
+      alert("OCR failed. Try a clearer screenshot or crop closer to the text.");
+    }
+  }
+
+  function extractFromOCR(){
+    const text = ($("ocrText").value || "").replace(/,/g, "");
+    if (!text.trim()){
+      alert("No OCR text is available yet.");
+      return;
+    }
+
+    const dollars = [...text.matchAll(/\$?\s?(\d{2,7})(?:\.\d{2})?/g)]
+      .map((match) => Number(match[1]))
+      .filter((value) => value >= 100);
+
+    const priceGuess = findNearKeyword(text, ["price", "asking", "list", "sale", "purchase"], 4000000) || maxInRange(dollars, 30000, 1500000);
+    const rentGuess = findNearKeyword(text, ["rent", "monthly", "lease"], 20000) || maxInRange(dollars, 400, 8000);
+    const arvGuess = findNearKeyword(text, ["arv", "after repair value", "value"], 4000000) || 0;
+
+    if (priceGuess && !$("price").value) $("price").value = String(priceGuess);
+    if (rentGuess && !$("rent").value) $("rent").value = String(rentGuess);
+    if (arvGuess && !$("arv").value) $("arv").value = String(arvGuess);
+
+    setStatus("Auto-filled from OCR");
+    analyzeDeal();
+  }
+
+  function findNearKeyword(text, keywords, maxValue){
+    const lower = text.toLowerCase();
+    for (const keyword of keywords){
+      const index = lower.indexOf(keyword);
+      if (index === -1) continue;
+      const slice = text.slice(index, index + 180).replace(/,/g, "");
+      const match = slice.match(/(\d{2,7})/);
+      if (!match) continue;
+      const number = Number(match[1]);
+      if (number > 0 && number <= maxValue) return number;
+    }
+    return 0;
+  }
+
+  function maxInRange(values, low, high){
+    const filtered = values.filter((value) => value >= low && value <= high);
+    return filtered.length ? Math.max(...filtered) : 0;
+  }
+
+  function openImportModal(){
+    $("importModal").classList.add("show");
+    $("importModal").setAttribute("aria-hidden", "false");
+    $("openAiKey").value = localStorage.getItem(OPENAI_KEY_STORAGE) || "";
+    setImportStep(reviewState.lastStep || "upload");
+  }
+
+  function closeImportModal(){
+    $("importModal").classList.remove("show");
+    $("importModal").setAttribute("aria-hidden", "true");
+  }
+
+  function resetImportFlow(clearFile = true){
+    if (reviewState.previewUrl){
+      URL.revokeObjectURL(reviewState.previewUrl);
+    }
+    reviewState.file = null;
+    reviewState.previewUrl = "";
+    reviewState.extracted = blankExtractedData();
+    reviewState.confidence = {};
+    reviewState.error = "";
+    setImportStep("upload");
+    hideImportError();
+    showProcessing(false);
+    $("reviewCounts").innerHTML = "";
+    $("reviewGrid").innerHTML = "";
+    $("zillowPreview").innerHTML = '<div class="muted">Upload a Zillow screenshot to preview it here.</div>';
+    if (clearFile){
+      $("zillowImgInput").value = "";
+    }
+  }
+
+  $("zillowImgInput").addEventListener("change", async (event) => {
+    const file = event.target.files && event.target.files[0];
+    hideImportError();
+    $("reviewGrid").innerHTML = "";
+    $("reviewCounts").innerHTML = "";
+    setImportStep("upload");
+
+    if (reviewState.previewUrl){
+      URL.revokeObjectURL(reviewState.previewUrl);
+      reviewState.previewUrl = "";
+    }
+
+    if (!file){
+      reviewState.file = null;
+      $("zillowPreview").innerHTML = '<div class="muted">Upload a Zillow screenshot to preview it here.</div>';
+      return;
+    }
+
+    try{
+      validateZillowFile(file);
+      reviewState.file = file;
+      reviewState.previewUrl = URL.createObjectURL(file);
+      $("zillowPreview").innerHTML = `<img alt="Zillow screenshot preview" src="${reviewState.previewUrl}">`;
+    }catch(error){
+      reviewState.file = null;
+      $("zillowImgInput").value = "";
+      $("zillowPreview").innerHTML = '<div class="muted">Upload a Zillow screenshot to preview it here.</div>';
+      showImportError(error.message);
+    }
+  });
+
+  $("openAiKey").addEventListener("input", (event) => {
+    localStorage.setItem(OPENAI_KEY_STORAGE, event.target.value.trim());
+  });
+
+  function validateZillowFile(file){
+    if (!ZILLOW_ALLOWED_TYPES.includes(file.type)){
+      throw new Error("Invalid file. Please upload a PNG, JPG, JPEG, or WebP Zillow screenshot.");
+    }
+    const sizeMb = file.size / (1024 * 1024);
+    if (sizeMb > ZILLOW_MAX_FILE_MB){
+      throw new Error(`Invalid file. Please keep screenshots under ${ZILLOW_MAX_FILE_MB} MB.`);
+    }
+  }
+
+  async function readZillowScreenshot(){
+    hideImportError();
+
+    const file = reviewState.file;
+    if (!file){
+      showImportError("Invalid file. Upload a Zillow screenshot before running extraction.");
+      return;
+    }
+
+    showProcessing(true);
+    setStatus("Reading Zillow screenshot...");
+
+    try{
+      const { width, height } = await getImageDimensions(file);
+      if (width < 500 || height < 500){
+        throw new Error("Image too blurry or too small. Please upload a clearer Zillow screenshot.");
+      }
+
+      const extracted = await extractZillowDataWithVision(file);
+      reviewState.extracted = extracted;
+      reviewState.error = "";
+      buildReviewFields(extracted, "");
+      refreshReviewConfidence();
+      setImportStep("review");
+      setStatus("Zillow extraction complete");
+    }catch(error){
+      console.error(error);
+      reviewState.extracted = blankExtractedData();
+      reviewState.error = error.message || "AI extraction failed.";
+      showImportError(reviewState.error);
+      buildReviewFields(reviewState.extracted, reviewState.error);
+      refreshReviewConfidence();
+      setImportStep("review");
+      setStatus("Zillow extraction needs review");
+    }finally{
+      showProcessing(false);
+    }
+  }
+
+  async function getImageDimensions(file){
+    const dataUrl = await fileToDataUrl(file);
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve({ width: image.naturalWidth, height: image.naturalHeight });
+      image.onerror = () => reject(new Error("Image too blurry or unreadable. Please try another Zillow screenshot."));
+      image.src = dataUrl;
+    });
+  }
+
+  async function extractZillowDataWithVision(file){
+    const apiKey = $("openAiKey").value.trim();
+    if (!apiKey){
+      throw new Error("AI extraction failed. Add an OpenAI API key to run Zillow screenshot import in this static app.");
+    }
+
+    const dataUrl = await fileToDataUrl(file);
+    const schema = {
+      type: "object",
+      additionalProperties: false,
+      required: fieldDefs.map((field) => field.key),
+      properties: fieldDefs.reduce((acc, field) => {
+        acc[field.key] = { type: "string" };
+        return acc;
+      }, {})
+    };
+
+    const body = {
+      model: "gpt-4.1-mini",
+      input: [
+        {
+          role: "system",
+          content: [
+            {
+              type: "input_text",
+              text: "Extract Zillow listing data from the screenshot. Return JSON only and follow the schema exactly. Use only information visible in the image. If a field is missing or unreadable, return an empty string. Keep currency values and numeric fields clean enough for form prefilling. Put any extra visible context into notes."
+            }
+          ]
+        },
+        {
+          role: "user",
+          content: [
+            {
+              type: "input_text",
+              text: "Read this Zillow screenshot and extract propertyAddress, city, state, zip, listingPrice, zestimate, estimatedRent, beds, baths, squareFeet, lotSize, yearBuilt, propertyType, daysOnMarket, hoaFee, monthlyPayment, agentName, agentPhone, listingUrl, and notes."
+            },
+            {
+              type: "input_image",
+              image_url: dataUrl,
+              detail: "high"
+            }
+          ]
+        }
+      ],
+      text: {
+        format: {
+          type: "json_schema",
+          name: "zillow_screenshot_extraction",
+          strict: true,
+          schema
+        }
+      }
+    };
+
+    const response = await fetch("https://api.openai.com/v1/responses", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+      },
+      body: JSON.stringify(body)
+    });
+
+    const payload = await response.json();
+    if (!response.ok){
+      throw new Error(payload && payload.error && payload.error.message ? payload.error.message : "AI extraction failed.");
+    }
+
+    const outputText = readResponseOutputText(payload);
+    if (!outputText){
+      throw new Error("AI extraction failed. The vision response did not return JSON.");
+    }
+
+    let parsed;
+    try{
+      parsed = JSON.parse(outputText);
+    }catch(error){
+      throw new Error("AI extraction failed. The vision response returned invalid JSON.");
+    }
+
+    return normalizeExtractedData(parsed);
+  }
+
+  function readResponseOutputText(payload){
+    if (typeof payload.output_text === "string" && payload.output_text.trim()){
+      return payload.output_text.trim();
+    }
+
+    if (!Array.isArray(payload.output)) return "";
+    const chunks = [];
+    payload.output.forEach((item) => {
+      if (!item || !Array.isArray(item.content)) return;
+      item.content.forEach((contentItem) => {
+        if (!contentItem) return;
+        if (typeof contentItem.text === "string"){
+          chunks.push(contentItem.text);
+        }else if (contentItem.type === "output_text" && typeof contentItem.value === "string"){
+          chunks.push(contentItem.value);
+        }
+      });
+    });
+    return chunks.join("").trim();
+  }
+
+  function normalizeExtractedData(parsed){
+    const normalized = blankExtractedData();
+    fieldDefs.forEach((field) => {
+      let value = parsed && Object.prototype.hasOwnProperty.call(parsed, field.key) ? parsed[field.key] : "";
+      if (value === null || value === undefined) value = "";
+      value = String(value).trim();
+      if (numericImportKeys.has(field.key)){
+        const numeric = toNumberOrNull(value);
+        normalized[field.key] = numeric === null ? "" : String(numeric);
+      }else{
+        normalized[field.key] = value;
+      }
+    });
+
+    if (normalized.state){
+      normalized.state = normalized.state.toUpperCase().slice(0, 2);
+    }
+    if (normalized.zip){
+      normalized.zip = normalized.zip.replace(/[^\d-]/g, "").slice(0, 10);
+    }
+    if (normalized.agentPhone){
+      normalized.agentPhone = normalized.agentPhone.replace(/[^\d()+\-\s.]/g, "").trim();
+    }
+    if (normalized.listingUrl && !/^https?:\/\//i.test(normalized.listingUrl)){
+      normalized.listingUrl = normalized.listingUrl.startsWith("www.") ? `https://${normalized.listingUrl}` : normalized.listingUrl;
+    }
+
+    return normalized;
+  }
+
+  function buildReviewFields(data, errorMessage){
+    const grid = $("reviewGrid");
+    grid.innerHTML = "";
+
+    fieldDefs.forEach((field) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = `reviewField${field.full ? " full" : ""}`;
+      wrapper.innerHTML = `
+        <div class="reviewFieldTop">
+          <label for="review-${field.key}" style="margin:0">${escapeHtml(field.label)}</label>
+          <span class="badge confidence-review" id="badge-${field.key}">Needs review</span>
+        </div>
+      `;
+
+      const input = field.full ? document.createElement("textarea") : document.createElement("input");
+      input.id = `review-${field.key}`;
+      input.value = data[field.key] || "";
+      input.placeholder = field.required ? `${field.label} is required` : `Enter ${field.label.toLowerCase()}`;
+      input.addEventListener("input", refreshReviewConfidence);
+      wrapper.appendChild(input);
+
+      const helper = document.createElement("div");
+      helper.className = "muted";
+      helper.textContent = errorMessage ? "Manual entry is available because the AI could not fully extract this screenshot." : (field.helper || "Review and edit before the values are applied.");
+      wrapper.appendChild(helper);
+
+      grid.appendChild(wrapper);
+    });
+  }
+
+  function getReviewData(){
+    return fieldDefs.reduce((acc, field) => {
+      acc[field.key] = $(`review-${field.key}`) ? $(`review-${field.key}`).value.trim() : "";
+      return acc;
+    }, {});
+  }
+
+  function detectConfidence(fieldKey, value){
+    const trimmed = String(value || "").trim();
+    if (!trimmed) return "Missing";
+
+    if (fieldKey === "state"){
+      return /^[A-Z]{2}$/.test(trimmed) ? "High confidence" : "Needs review";
+    }
+
+    if (fieldKey === "zip"){
+      return /^\d{5}(-\d{4})?$/.test(trimmed) ? "High confidence" : "Needs review";
+    }
+
+    if (fieldKey === "listingUrl"){
+      return /^https?:\/\/\S+$/i.test(trimmed) ? "High confidence" : "Needs review";
+    }
+
+    if (fieldKey === "agentPhone"){
+      const digits = trimmed.replace(/\D/g, "");
+      return digits.length >= 10 ? "High confidence" : "Needs review";
+    }
+
+    if (numericImportKeys.has(fieldKey)){
+      const numeric = toNumberOrNull(trimmed);
+      return numeric === null ? "Needs review" : "High confidence";
+    }
+
+    if (fieldKey === "notes"){
+      return trimmed.length >= 20 ? "Needs review" : "High confidence";
+    }
+
+    if (fieldKey === "propertyAddress"){
+      return trimmed.length >= 8 ? "High confidence" : "Needs review";
+    }
+
+    return trimmed.length >= 3 ? "High confidence" : "Needs review";
+  }
+
+  function summarizeConfidence(confidenceMap){
+    let high = 0;
+    let review = 0;
+    let missing = 0;
+
+    fieldDefs.forEach((field) => {
+      const status = confidenceMap[field.key] || "Missing";
+      if (status === "High confidence") high += 1;
+      else if (status === "Needs review") review += 1;
+      else missing += 1;
+    });
+
+    return { high, review, missing };
+  }
+
+  function refreshReviewConfidence(){
+    const reviewData = getReviewData();
+    reviewState.extracted = reviewData;
+    reviewState.confidence = {};
+
+    fieldDefs.forEach((field) => {
+      const status = detectConfidence(field.key, reviewData[field.key]);
+      reviewState.confidence[field.key] = status;
+      const badge = $(`badge-${field.key}`);
+      if (!badge) return;
+      badge.textContent = status;
+      badge.className = `badge ${getConfidenceClass(status)}`;
+    });
+
+    const counts = summarizeConfidence(reviewState.confidence);
+    $("reviewCounts").innerHTML = `
+      <span class="badge confidence-high">${counts.high} High confidence</span>
+      <span class="badge confidence-review">${counts.review} Needs review</span>
+      <span class="badge confidence-missing">${counts.missing} Missing</span>
+    `;
+  }
+
+  function applyReviewToForm(){
+    const reviewData = getReviewData();
+    const missingRequired = [];
+
+    if (!reviewData.propertyAddress) missingRequired.push("Property Address");
+    if (!reviewData.listingPrice || toNumberOrNull(reviewData.listingPrice) === null) missingRequired.push("Listing Price");
+
+    if (missingRequired.length){
+      showImportError(`Missing required fields: ${missingRequired.join(", ")}.`);
+      return;
+    }
+
+    $("address").value = reviewData.propertyAddress;
+    $("city").value = reviewData.city;
+    $("state").value = reviewData.state.toUpperCase();
+    $("zip").value = reviewData.zip;
+    $("price").value = displayValue(toNumberOrNull(reviewData.listingPrice));
+    $("zestimate").value = displayValue(toNumberOrNull(reviewData.zestimate));
+    $("rent").value = displayValue(toNumberOrNull(reviewData.estimatedRent));
+    $("beds").value = displayValue(toNumberOrNull(reviewData.beds));
+    $("baths").value = displayValue(toNumberOrNull(reviewData.baths));
+    $("squareFeet").value = displayValue(toNumberOrNull(reviewData.squareFeet));
+    $("lotSize").value = reviewData.lotSize;
+    $("yearBuilt").value = displayValue(toNumberOrNull(reviewData.yearBuilt));
+    $("propertyType").value = reviewData.propertyType;
+    $("daysOnMarket").value = displayValue(toNumberOrNull(reviewData.daysOnMarket));
+    $("hoaFee").value = displayValue(toNumberOrNull(reviewData.hoaFee));
+    $("monthlyPayment").value = displayValue(toNumberOrNull(reviewData.monthlyPayment));
+    $("agentName").value = reviewData.agentName;
+    $("agentPhone").value = reviewData.agentPhone;
+    $("listingUrl").value = reviewData.listingUrl;
+
+    const currentNotes = $("notes").value.trim();
+    const importedNotes = reviewData.notes.trim();
+    if (importedNotes){
+      $("notes").value = currentNotes && currentNotes !== importedNotes ? `${currentNotes}\n\nImported from Zillow:\n${importedNotes}` : importedNotes;
+    }
+
+    lastImportMeta = {
+      source: "zillow-screenshot",
+      fileName: reviewState.file ? reviewState.file.name : "zillow-screenshot",
+      appliedAt: new Date().toISOString(),
+      confidence: structuredClone(reviewState.confidence)
+    };
+
+    updateImportSummary(lastImportMeta);
+    analyzeDeal();
+    closeImportModal();
+    setStatus("Zillow import applied");
+  }
+
+  async function fileToDataUrl(file){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error("Could not read the uploaded image."));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape"){
+      closeImportModal();
+    }
+  });
+
+  buildReviewFields(blankExtractedData(), "");
+  refreshReviewConfidence();
+  resetImportFlow();
+  updateImportSummary(null);
   renderPipeline();
 </script>
 </body>
